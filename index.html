@@ -5,25 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Said Ashirbayev | Zimran Business Cup CV</title>
 
-  <!-- Google Fonts: Montserrat + Edgy Paint/Glitch Display Fonts (Permanent Marker, Rubik Glitch, Dela Gothic One) -->
+  <!-- Google Fonts: Montserrat + Edgy Paint/Glitch Display Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,900&family=Permanent+Marker&family=Rubik+Glitch&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
 
   <style>
+    /* Подключение кастомного шрифта .otf */
     @font-face {
-    font-family: 'Forgotten November';
-    src: url('ForgottenNovember.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
+      font-family: 'Forgotten November';
+      src: url('ForgottenNovember.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     /* ==========================================================================
        VARIABLES & HARDCORE COLOR PALETTE
        ========================================================================== */
     :root {
-      --font-paint: 'Forgotten November', cursive;
-
-      
       --bg-main: #050608;
       --bg-card: #0d0e14;
       --bg-card-hover: #151821;
@@ -35,7 +34,7 @@
       --border-tech: rgba(204, 255, 0, 0.25);
       
       --font-main: 'Montserrat', sans-serif;
-      --font-paint: 'Permanent Marker', cursive;
+      --font-paint: 'Forgotten November', cursive;
       --font-glitch: 'Rubik Glitch', cursive;
       --font-heavy: 'Dela Gothic One', sans-serif;
     }
@@ -68,7 +67,7 @@
     }
 
     /* ==========================================================================
-       1. TOP HERO COVER (ТИТУЛЬНЫЙ ЭКРАН - Ч/Б ГЛАЗА + РЕЗКИЙ ШРИФТ-КРАСКА)
+       1. TOP HERO COVER
        ========================================================================== */
     .cover-banner {
       position: relative;
@@ -84,13 +83,13 @@
       border-bottom: 3px solid var(--accent-yellow);
     }
 
-    /* B&W Eyes Background with High Contrast */
+    /* Background Image */
     .eyes-bg-image {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       object-fit: cover;
       object-position: center 35%;
-      filter: grayscale(100%) contrast(190%) brightness(40%);
+      filter: brightness(50%);
       transform: scale(1.05);
       animation: slowZoom 20s infinite alternate ease-in-out;
       z-index: 1;
@@ -118,18 +117,18 @@
     }
 
     /* Raw Paint-Stroke Typography */
-   .paint-title {
-  font-family: var(--font-paint);
-  font-size: clamp(3rem, 8vw, 7rem);
-  color: var(--accent-yellow);
-  text-transform: uppercase;
-  line-height: 1;
-  transform: rotate(0deg); /* Убрали наклон, если шрифт этого не требует */
-  text-shadow: 
-    3px 3px 0px var(--accent-pink),
-    -3px -3px 0px var(--accent-cyan);
-  margin-bottom: 25px;
-}
+    .paint-title {
+      font-family: var(--font-paint);
+      font-size: clamp(3rem, 8vw, 7rem);
+      color: var(--accent-yellow);
+      text-transform: uppercase;
+      line-height: 1;
+      transform: rotate(0deg);
+      text-shadow: 
+        3px 3px 0px var(--accent-pink),
+        -3px -3px 0px var(--accent-cyan);
+      margin-bottom: 25px;
+    }
 
     .sub-paint {
       font-family: var(--font-heavy);
@@ -518,9 +517,9 @@
     <button class="btn-action" onclick="openModal('modal-pitch')">Питч CV</button>
   </header>
 
-  <!-- 1. FULL-WIDTH HERO COVER BANNER (B&W EYES + BOLD PAINT TEXT) -->
+  <!-- 1. FULL-WIDTH HERO COVER BANNER -->
   <section class="cover-banner">
-    <!-- High Contrast B&W Eyes Background Image -->
+    <!-- Background Image -->
     <img src="IMG_6748.jpg" alt="Background Image" class="eyes-bg-image">
     <div class="cover-overlay"></div>
 
