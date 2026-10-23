@@ -11,10 +11,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,900&family=Permanent+Marker&family=Rubik+Glitch&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
 
   <style>
+    @font-face {
+    font-family: 'Forgotten November';
+    src: url('ForgottenNovember.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
     /* ==========================================================================
        VARIABLES & HARDCORE COLOR PALETTE
        ========================================================================== */
     :root {
+      --font-paint: 'Forgotten November', cursive;
+
+      
       --bg-main: #050608;
       --bg-card: #0d0e14;
       --bg-card-hover: #151821;
@@ -109,20 +118,18 @@
     }
 
     /* Raw Paint-Stroke Typography */
-    .paint-title {
-      font-family: var(--font-paint);
-      font-size: clamp(3.2rem, 9vw, 8rem);
-      color: var(--accent-yellow);
-      text-transform: uppercase;
-      line-height: 0.9;
-      transform: rotate(-2deg);
-      text-shadow: 
-        5px 5px 0px var(--accent-pink),
-        -4px -4px 0px var(--accent-cyan),
-        0 0 30px rgba(204, 255, 0, 0.5);
-      margin-bottom: 25px;
-      letter-spacing: -1px;
-    }
+   .paint-title {
+  font-family: var(--font-paint);
+  font-size: clamp(3rem, 8vw, 7rem);
+  color: var(--accent-yellow);
+  text-transform: uppercase;
+  line-height: 1;
+  transform: rotate(0deg); /* Убрали наклон, если шрифт этого не требует */
+  text-shadow: 
+    3px 3px 0px var(--accent-pink),
+    -3px -3px 0px var(--accent-cyan);
+  margin-bottom: 25px;
+}
 
     .sub-paint {
       font-family: var(--font-heavy);
@@ -514,7 +521,7 @@
   <!-- 1. FULL-WIDTH HERO COVER BANNER (B&W EYES + BOLD PAINT TEXT) -->
   <section class="cover-banner">
     <!-- High Contrast B&W Eyes Background Image -->
-    <img src="https://images.unsplash.com/photo-1544435253-f0203412447e?auto=format&fit=crop&w=1600&q=80" alt="Eyes B&W Background" class="eyes-bg-image">
+    <img src="IMG_6748.jpg" alt="Background Image" class="eyes-bg-image">
     <div class="cover-overlay"></div>
 
     <div class="cover-content">
