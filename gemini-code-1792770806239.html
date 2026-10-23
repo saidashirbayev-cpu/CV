@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Said Ashirbayev | Zimran Business Cup CV</title>
+
+  <!-- Google Fonts: Montserrat + Edgy Paint/Glitch Display Fonts (Permanent Marker, Rubik Glitch, Dela Gothic One) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,900&family=Permanent+Marker&family=Rubik+Glitch&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES & HARDCORE COLOR PALETTE
+       ========================================================================== */
+    :root {
+      --bg-main: #050608;
+      --bg-card: #0d0e14;
+      --bg-card-hover: #151821;
+      --accent-yellow: #ccff00; /* Lime Electric */
+      --accent-cyan: #00f0ff;   /* Cyber Cyan */
+      --accent-pink: #ff0055;   /* High Voltage Pink */
+      --text-main: #f0f4f8;
+      --text-muted: #7b8599;
+      --border-tech: rgba(204, 255, 0, 0.25);
+      
+      --font-main: 'Montserrat', sans-serif;
+      --font-paint: 'Permanent Marker', cursive;
+      --font-glitch: 'Rubik Glitch', cursive;
+      --font-heavy: 'Dela Gothic One', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      overflow-x: hidden;
+    }
+
+    /* Cyber Grid Backdrop */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: 
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       1. TOP HERO COVER (ТИТУЛЬНЫЙ ЭКРАН - Ч/Б ГЛАЗА + РЕЗКИЙ ШРИФТ-КРАСКА)
+       ========================================================================== */
+    .cover-banner {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      overflow: hidden;
+      border-bottom: 3px solid var(--accent-yellow);
+    }
+
+    /* B&W Eyes Background with High Contrast */
+    .eyes-bg-image {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: grayscale(100%) contrast(190%) brightness(40%);
+      transform: scale(1.05);
+      animation: slowZoom 20s infinite alternate ease-in-out;
+      z-index: 1;
+    }
+
+    @keyframes slowZoom {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+
+    /* Vignette & Color Gradients Overlay */
+    .cover-overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at center, rgba(5,6,8,0.2) 0%, rgba(5,6,8,0.95) 85%),
+        linear-gradient(180deg, rgba(5,6,8,0.6) 0%, rgba(5,6,8,0.9) 100%);
+      z-index: 2;
+    }
+
+    .cover-content {
+      position: relative;
+      z-index: 5;
+      max-width: 1100px;
+    }
+
+    /* Raw Paint-Stroke Typography */
+    .paint-title {
+      font-family: var(--font-paint);
+      font-size: clamp(3.2rem, 9vw, 8rem);
+      color: var(--accent-yellow);
+      text-transform: uppercase;
+      line-height: 0.9;
+      transform: rotate(-2deg);
+      text-shadow: 
+        5px 5px 0px var(--accent-pink),
+        -4px -4px 0px var(--accent-cyan),
+        0 0 30px rgba(204, 255, 0, 0.5);
+      margin-bottom: 25px;
+      letter-spacing: -1px;
+    }
+
+    .sub-paint {
+      font-family: var(--font-heavy);
+      font-size: clamp(1rem, 2.5vw, 1.8rem);
+      color: #fff;
+      background: #000;
+      display: inline-block;
+      padding: 8px 20px;
+      border: 2px solid var(--accent-cyan);
+      box-shadow: 6px 6px 0px var(--accent-cyan);
+      transform: rotate(1deg);
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+
+    .cover-tags {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .paint-badge {
+      font-family: var(--font-main);
+      font-weight: 900;
+      font-size: 0.8rem;
+      padding: 8px 18px;
+      background: rgba(255, 0, 85, 0.2);
+      border: 1px solid var(--accent-pink);
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Scroll Down Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      z-index: 5;
+      color: var(--accent-yellow);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    /* ==========================================================================
+       2. HEADER NAVIGATION
+       ========================================================================== */
+    header {
+      position: fixed;
+      top: 0; width: 100%;
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 6, 8, 0.88);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 100;
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      color: var(--text-main);
+    }
+    .logo span { color: var(--accent-yellow); }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: var(--accent-yellow); }
+
+    .btn-action {
+      padding: 10px 22px;
+      background: transparent;
+      border: 2px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      font-weight: 900;
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn-action:hover {
+      background: var(--accent-yellow);
+      color: #000;
+      box-shadow: 0 0 25px rgba(204, 255, 0, 0.6);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       3. NUMBERS & INSERTION METRICS
+       ========================================================================== */
+    .metrics-bar {
+      padding: 50px 8%;
+      background: #08090e;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 20px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 25px;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--accent-yellow);
+    }
+    .metric-card:hover {
+      border-color: var(--accent-yellow);
+      transform: translateY(-4px);
+    }
+
+    .metric-number {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--accent-yellow);
+      font-family: var(--font-heavy);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       4. INTERACTIVE CASE COMPETITIONS & ACHIEVEMENTS
+       ========================================================================== */
+    .section-padding { padding: 90px 8%; }
+
+    .section-subtitle {
+      color: var(--accent-yellow);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 35px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-8px);
+      border-color: var(--accent-yellow);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+
+    .card-tag {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .card-link {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--accent-yellow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ==========================================================================
+       5. SKILLS MATRIX
+       ========================================================================== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .skill-box {
+      background: var(--bg-card);
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .skill-box-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .skill-box-title::before {
+      content: "";
+      width: 8px; height: 8px;
+      background: var(--accent-yellow);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 7px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #d1d5db;
+      transition: all 0.3s;
+    }
+    .tag:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    /* ==========================================================================
+       6. MODAL POPUP WINDOWS
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border: 2px solid var(--accent-yellow);
+      width: 90%;
+      max-width: 600px;
+      padding: 40px;
+      position: relative;
+      transform: translateY(30px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 50px rgba(204, 255, 0, 0.25);
+    }
+
+    .modal-overlay.active .modal-content { transform: translateY(0); }
+
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .modal-close:hover { color: var(--accent-pink); }
+
+    /* ==========================================================================
+       7. FOOTER
+       ========================================================================== */
+    footer {
+      padding: 70px 8% 40px;
+      background: #030405;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+    }
+
+    .contact-btns {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .c-btn {
+      padding: 12px 24px;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+    }
+    .c-btn:hover {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+
+    @media (max-width: 768px) {
+      .paint-title { font-size: 3.2rem; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">SAID<span>.ASHIRBAYEV</span></div>
+    <nav>
+      <a href="#achievements">Достижения</a>
+      <a href="#skills">Навыки</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <button class="btn-action" onclick="openModal('modal-pitch')">Питч CV</button>
+  </header>
+
+  <!-- 1. FULL-WIDTH HERO COVER BANNER (B&W EYES + BOLD PAINT TEXT) -->
+  <section class="cover-banner">
+    <!-- High Contrast B&W Eyes Background Image -->
+    <img src="https://images.unsplash.com/photo-1544435253-f0203412447e?auto=format&fit=crop&w=1600&q=80" alt="Eyes B&W Background" class="eyes-bg-image">
+    <div class="cover-overlay"></div>
+
+    <div class="cover-content">
+      <div class="sub-paint">ZIMRAN BUSINESS CUP 2026</div>
+      <h1 class="paint-title">SAID ASHIRBAYEV</h1>
+      <p style="font-size: clamp(1rem, 2vw, 1.4rem); color: #e5e7eb; max-width: 750px; margin: 0 auto 20px; font-weight: 700;">
+        EXTRA GTD // FRONTEND MVP // DATA ANALYTICS // PITCH CHAMPION
+      </p>
+
+      <div class="cover-tags">
+        <span class="paint-badge">★ iGEM Gold Medalist</span>
+        <span class="paint-badge">🏆 3MT Pitch Winner</span>
+        <span class="paint-badge">⚡ Integrity Case 4th</span>
+      </div>
+    </div>
+
+    <a href="#metrics" class="scroll-indicator">
+      EXPLORE CV
+      <span>↓</span>
+    </a>
+  </section>
+
+  <!-- 2. NUMBERS & INSERTION METRICS -->
+  <section class="metrics-bar" id="metrics">
+    <div class="metric-card">
+      <div class="metric-number" data-target="1420">0</div>
+      <div class="metric-label">SAT Score (Math 790)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-number" data-target="7.5" data-decimal="1">0.0</div>
+      <div class="metric-label">IELTS Academic</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-number">4-е</div>
+      <div class="metric-label">Integrity Case Champ</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-number">2-е</div>
+      <div class="metric-label">3 Minute Thesis (3MT)</div>
+    </div>
+  </section>
+
+  <!-- 3. CASE COMPETITIONS & ACHIEVEMENTS -->
+  <section class="section-padding" id="achievements">
+    <div class="section-subtitle">// Track Record</div>
+    <h2 class="section-title">Кейс-чемпионаты и Победы</h2>
+
+    <div class="grid-cards">
+      <div class="card" onclick="openModal('modal-integrity')">
+        <div>
+          <div class="card-tag">Case Competition</div>
+          <h3 class="card-title">4-е Место — Integrity Case Championship</h3>
+          <p class="card-desc">Решение реальных бизнес-кейсов, Root-Cause анализ и защита стратегии перед топ-жюри.</p>
+        </div>
+        <div class="card-link">Подробнее ➔</div>
+      </div>
+
+      <div class="card" onclick="openModal('modal-3mt')">
+        <div>
+          <div class="card-tag">Pitching & Speaking</div>
+          <h3 class="card-title">2-е Место — 3 Minute Thesis (3MT)</h3>
+          <p class="card-desc">Победитель чемпионата по упаковке сложных концептов в 3-минутный убедительный питч.</p>
+        </div>
+        <div class="card-link">Подробнее ➔</div>
+      </div>
+
+      <div class="card" onclick="openModal('modal-igem')">
+        <div>
+          <div class="card-tag">Global Competition</div>
+          <h3 class="card-title">Gold Medal — iGEM Paris</h3>
+          <p class="card-desc">Лидерство в Human Practices. Защита биотех-проекта по переработке пластика на финал-саммите во Франции.</p>
+        </div>
+        <div class="card-link">Подробнее ➔</div>
+      </div>
+
+      <div class="card" onclick="openModal('modal-datathon')">
+        <div>
+          <div class="card-tag">Data Analytics</div>
+          <h3 class="card-title">Участник Дататона</h3>
+          <p class="card-desc">Аналитика больших массивов данных, формирование продуктовых гипотез и опора на метрики.</p>
+        </div>
+        <div class="card-link">Подробнее ➔</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. SKILLS MATRIX -->
+  <section class="section-padding" id="skills" style="background: #08090e;">
+    <div class="section-subtitle">// Core Capabilities</div>
+    <h2 class="section-title">Стек и Навыки</h2>
+
+    <div class="skills-grid">
+      <div class="skill-box">
+        <h3 class="skill-box-title">Frontend & Prototyping</h3>
+        <div class="skill-tags">
+          <span class="tag">HTML5 / CSS3</span>
+          <span class="tag">JavaScript (ES6+)</span>
+          <span class="tag">React Basics</span>
+          <span class="tag">Figma UI/UX</span>
+          <span class="tag">Rapid MVP Build</span>
+        </div>
+      </div>
+
+      <div class="skill-box">
+        <h3 class="skill-box-title">Data & Business Sense</h3>
+        <div class="skill-tags">
+          <span class="tag">Дататон Опыт</span>
+          <span class="tag">Проверка Гипотез</span>
+          <span class="tag">Case Solving</span>
+          <span class="tag">Unit Economics</span>
+        </div>
+      </div>
+
+      <div class="skill-box">
+        <h3 class="skill-box-title">Pitching & Leadership</h3>
+        <div class="skill-tags">
+          <span class="tag">Дебаты</span>
+          <span class="tag">Public Speaking</span>
+          <span class="tag">Питчинг</span>
+          <span class="tag">Team Leadership</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="section-subtitle">// Zimran Business Cup Ready</div>
+    <h2 style="font-family: var(--font-heavy); font-size: 2.2rem; color: var(--accent-yellow); margin-bottom: 15px;">ГОТОВ К СТАРТУ</h2>
+    <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">Открыт к формированию мощной команды для победы на хакатоне.</p>
+
+    <div class="contact-btns">
+      <a href="https://t.me/said_ashirbaev" target="_blank" class="c-btn">Telegram: @said_ashirbaev</a>
+      <a href="mailto:saidashirbayev@gmail.com" class="c-btn">saidashirbayev@gmail.com</a>
+      <a href="tel:+77052771687" class="c-btn">+7 (705) 277-1687</a>
+    </div>
+  </footer>
+
+  <!-- POPUP MODALS -->
+  <div class="modal-overlay" id="modal-integrity">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal-integrity')">✕</button>
+      <h3 style="color: var(--accent-yellow); margin-bottom: 10px;">4-е Место — Integrity Case Championship</h3>
+      <p style="color: var(--text-muted); line-height: 1.6;">
+        Глубокий анализ бизнес-кейса, поиск корневых проблем и защита внедрения решений перед топ-менеджментом.
+      </p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-3mt">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal-3mt')">✕</button>
+      <h3 style="color: var(--accent-yellow); margin-bottom: 10px;">2-е Место — 3 Minute Thesis</h3>
+      <p style="color: var(--text-muted); line-height: 1.6;">
+        Умение сжато, яркими аргументами презентовать сложную идею за 180 секунд.
+      </p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-igem">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal-igem')">✕</button>
+      <h3 style="color: var(--accent-yellow); margin-bottom: 10px;">iGEM Gold Medalist (Paris)</h3>
+      <p style="color: var(--text-muted); line-height: 1.6;">
+        Руководство департаментом Human Practices, защита проекта переработки пластика в Париже.
+      </p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-datathon">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal-datathon')">✕</button>
+      <h3 style="color: var(--accent-yellow); margin-bottom: 10px;">Участник Дататона</h3>
+      <p style="color: var(--text-muted); line-height: 1.6;">
+        Анализ датасетов, построение продуктовых гипотез и работа с бизнес-метриками.
+      </p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-pitch">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal-pitch')">✕</button>
+      <h3 style="color: var(--accent-yellow); margin-bottom: 15px;">Питч для Zimran Cup</h3>
+      <p style="color: var(--text-muted); line-height: 1.6;">
+        <strong>1. Frontend MVP:</strong> Умение оперативно собрать рабочий фронтенд.<br><br>
+        <strong>2. Business & Data:</strong> Опыт кейс-чемпионатов и дататонов.<br><br>
+        <strong>3. Pitch Ready:</strong> Победитель 3MT и опытный дебатер.
+      </p>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    // Numbers animation
+    const counters = document.querySelectorAll('.metric-number');
+    let animated = false;
+
+    window.addEventListener('scroll', () => {
+      const section = document.querySelector('.metrics-bar');
+      if (!section) return;
+      const pos = section.getBoundingClientRect().top;
+      if (pos < window.innerHeight && !animated) {
+        animated = true;
+        counters.forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          if (!target) return;
+          const isDecimal = counter.getAttribute('data-decimal');
+          let count = 0;
+          const inc = target / 150;
+
+          const update = () => {
+            count += inc;
+            if (count < target) {
+              counter.innerText = isDecimal ? count.toFixed(1) : Math.ceil(count);
+              setTimeout(update, 15);
+            } else {
+              counter.innerText = isDecimal ? target.toFixed(1) : target;
+            }
+          };
+          update();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
