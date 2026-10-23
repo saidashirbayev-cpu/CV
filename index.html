@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,900&family=Permanent+Marker&family=Rubik+Glitch&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* Подключение кастомного шрифта .otf с исправленным пробелом в названии */
+    /* Подключение кастомного шрифта .otf */
     @font-face {
       font-family: 'Forgotten November';
       src: url('Forgotten November.otf') format('opentype');
@@ -123,6 +123,7 @@
       color: var(--accent-yellow);
       text-transform: uppercase;
       line-height: 1;
+      letter-spacing: 8px; /* Увеличенное расстояние между буквами */
       transform: rotate(0deg);
       text-shadow: 
         3px 3px 0px var(--accent-pink),
@@ -465,13 +466,34 @@
     .modal-close:hover { color: var(--accent-pink); }
 
     /* ==========================================================================
-       7. FOOTER
+       7. FOOTER & B&W PHOTO
        ========================================================================== */
     footer {
       padding: 70px 8% 40px;
       background: #030405;
       border-top: 1px solid rgba(255,255,255,0.05);
       text-align: center;
+    }
+
+    .footer-photo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .footer-photo {
+      width: 180px;
+      height: 220px;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(120%) brightness(90%);
+      border: 2px solid var(--accent-cyan);
+      box-shadow: 6px 6px 0px var(--accent-pink);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .footer-photo:hover {
+      transform: translateY(-5px);
+      box-shadow: 8px 8px 0px var(--accent-yellow);
     }
 
     .contact-btns {
@@ -499,7 +521,7 @@
     }
 
     @media (max-width: 768px) {
-      .paint-title { font-size: 3.2rem; }
+      .paint-title { font-size: 3.2rem; letter-spacing: 4px; }
       nav { display: none; }
     }
   </style>
@@ -648,6 +670,11 @@
 
   <!-- FOOTER -->
   <footer id="contact">
+    <!-- Ч/Б Фотография профиля -->
+    <div class="footer-photo-container">
+      <img src="00 (9).JPG" alt="Said Ashirbayev B&W" class="footer-photo">
+    </div>
+
     <div class="section-subtitle">// Zimran Business Cup Ready</div>
     <h2 style="font-family: var(--font-heavy); font-size: 2.2rem; color: var(--accent-yellow); margin-bottom: 15px;">ГОТОВ К СТАРТУ</h2>
     <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">Открыт к формированию мощной команды для победы на хакатоне.</p>
