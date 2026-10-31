@@ -90,15 +90,15 @@
       padding: 40px 20px;
       overflow: hidden;
       border-bottom: 3px solid var(--accent-yellow);
-      background: radial-gradient(circle at 50% 30%, rgba(0, 240, 255, 0.08) 0%, rgba(5, 6, 8, 0.98) 75%);
+      background: radial-gradient(circle at 50% 30%, rgba(0, 240, 255, 0.1) 0%, rgba(5, 6, 8, 0.98) 75%);
     }
 
     .hero-glow-bg {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background: 
-        radial-gradient(circle at 20% 20%, rgba(204, 255, 0, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(255, 0, 85, 0.05) 0%, transparent 40%);
+        radial-gradient(circle at 20% 20%, rgba(204, 255, 0, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255, 0, 85, 0.08) 0%, transparent 40%);
       pointer-events: none;
       z-index: 1;
     }
@@ -185,18 +185,18 @@
     }
 
     /* ==========================================================================
-       2. HEADER NAVIGATION & SOUND CONTROL
+       2. HEADER NAVIGATION & AUDIO CONTROLS WITH VOLUME SLIDER
        ========================================================================== */
     header {
       position: fixed;
       top: 0; width: 100%;
-      padding: 18px 8%;
+      padding: 15px 5%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(5, 6, 8, 0.9);
+      background: rgba(5, 6, 8, 0.92);
       backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       z-index: 100;
     }
 
@@ -216,7 +216,7 @@
     nav a {
       color: var(--text-muted);
       text-decoration: none;
-      margin-left: 25px;
+      margin-left: 20px;
       font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
@@ -228,17 +228,28 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 15px;
+    }
+
+    /* Audio Controller Box */
+    .audio-control-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(13, 14, 20, 0.8);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 6px 14px;
+      border-radius: 4px;
     }
 
     .btn-audio {
-      padding: 8px 16px;
-      background: rgba(0, 240, 255, 0.1);
+      padding: 6px 12px;
+      background: rgba(0, 240, 255, 0.15);
       border: 1px solid var(--accent-cyan);
       color: var(--accent-cyan);
       font-weight: 800;
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
       text-transform: uppercase;
       cursor: pointer;
       display: flex;
@@ -249,11 +260,45 @@
     .btn-audio.active {
       background: var(--accent-cyan);
       color: #000;
-      box-shadow: 0 0 18px rgba(0, 240, 255, 0.6);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+    }
+
+    .volume-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 80px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-yellow);
+      cursor: pointer;
+      box-shadow: 0 0 8px var(--accent-yellow);
+    }
+
+    .volume-val {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--accent-yellow);
+      min-width: 32px;
     }
 
     .btn-action {
-      padding: 10px 22px;
+      padding: 10px 20px;
       background: transparent;
       border: 2px solid var(--accent-yellow);
       color: var(--accent-yellow);
@@ -345,10 +390,10 @@
       margin-bottom: 50px;
     }
 
-    /* Container holding Cards + Right Side Photo */
+    /* Grid Layout: Left Cards + Right Side Photo */
     .achievements-layout {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 2.1fr 1fr;
       gap: 30px;
       align-items: start;
     }
@@ -409,10 +454,10 @@
       letter-spacing: 1px;
     }
 
-    /* Right Side Cyber Photo Framing */
+    /* Right Side Cyber Photo Frame with Fallback Support */
     .side-photo-container {
       background: var(--bg-card);
-      border: 1px solid rgba(0, 240, 255, 0.3);
+      border: 1px solid rgba(0, 240, 255, 0.35);
       padding: 20px;
       text-align: center;
       position: relative;
@@ -426,16 +471,17 @@
 
     .side-photo {
       width: 100%;
-      height: 380px;
+      height: 400px;
       object-fit: cover;
       filter: contrast(105%) brightness(95%);
       border: 2px solid var(--accent-cyan);
       box-shadow: 8px 8px 0px var(--accent-pink);
+      background-color: var(--bg-main);
     }
 
     .photo-caption-title {
       font-family: var(--font-heavy);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--accent-yellow);
       margin-top: 18px;
       text-transform: uppercase;
@@ -593,7 +639,10 @@
         grid-template-columns: 1fr;
       }
       .side-photo {
-        height: 320px;
+        height: 350px;
+      }
+      .header-actions {
+        flex-wrap: wrap;
       }
     }
 
@@ -608,7 +657,7 @@
   <!-- 3D CANVAS FOR SCREEN EDGES -->
   <canvas id="canvas-3d"></canvas>
 
-  <!-- HEADER -->
+  <!-- HEADER WITH AUDIO CONTROLLER & VOLUME SLIDER -->
   <header>
     <div class="logo">SAID<span>.ASHIRBAYEV</span></div>
     <nav>
@@ -617,9 +666,16 @@
       <a href="#contact" onmouseenter="playHoverSFX()">Контакты</a>
     </nav>
     <div class="header-actions">
-      <button class="btn-audio active" id="audio-toggle" onclick="toggleAudio()" title="Включить / Выключить звук и музыку">
-        <span id="audio-icon">⚡</span> SOUND: ON
-      </button>
+      <!-- Audio & Volume Box -->
+      <div class="audio-control-box">
+        <button class="btn-audio active" id="audio-toggle" onclick="toggleAudio()" title="Включить / Выключить звук">
+          <span id="audio-icon">⚡</span> SOUND: ON
+        </button>
+        <div class="volume-container">
+          <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="70" oninput="updateVolume(this.value)">
+          <span id="volume-val" class="volume-val">70%</span>
+        </div>
+      </div>
       <button class="btn-action" onclick="openModal('modal-pitch')">Питч CV</button>
     </div>
   </header>
@@ -668,7 +724,7 @@
     </div>
   </section>
 
-  <!-- 3. CASE COMPETITIONS & SIDE PHOTO (00 (9).JPG) -->
+  <!-- 3. CASE COMPETITIONS & SIDE PHOTO (00 (9).JPG WITH HIGH-TECH FALLBACK) -->
   <section class="section-padding" id="achievements">
     <div class="section-subtitle">// Track Record</div>
     <h2 class="section-title">Кейс-чемпионаты и Победы</h2>
@@ -713,9 +769,14 @@
         </div>
       </div>
 
-      <!-- Right Column: Profile Photo 00 (9).jpg -->
+      <!-- Right Column: Profile Photo 00 (9).jpg with dynamic SVG Fallback -->
       <div class="side-photo-container" onmouseenter="playHoverSFX()">
-        <img src="00 (9).jpg" alt="Said Ashirbayev Profile" class="side-photo">
+        <img 
+          src="00 (9).jpg" 
+          alt="Said Ashirbayev Profile" 
+          class="side-photo"
+          onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'400\' viewBox=\'0 0 300 400\'><rect width=\'100%\' height=\'100%\' fill=\'%230d0e14\'/><rect x=\'12\' y=\'12\' width=\'276\' height=\'376\' fill=\'none\' stroke=\'%2300f0ff\' stroke-width=\'2\' stroke-dasharray=\'8,4\'/><circle cx=\'150\' cy=\'150\' r=\'65\' fill=\'%23151821\' stroke=\'%23ccff00\' stroke-width=\'3\'/><text x=\'150\' y=\'165\' font-family=\'sans-serif\' font-size=\'46\' font-weight=\'bold\' fill=\'%23ccff00\' text-anchor=\'middle\'>SA</text><text x=\'150\' y=\'270\' font-family=\'sans-serif\' font-size=\'18\' font-weight=\'bold\' fill=\'%2300f0ff\' text-anchor=\'middle\'>SAID ASHIRBAYEV</text><text x=\'150\' y=\'305\' font-family=\'sans-serif\' font-size=\'13\' font-weight=\'bold\' fill=\'%237b8599\' text-anchor=\'middle\'>ZIMRAN CUP CONTENDER</text></svg>';"
+        >
         <div class="photo-caption-title">Said Ashirbayev</div>
         <div class="photo-caption-sub">Zimran Cup Contender</div>
       </div>
@@ -808,7 +869,7 @@
       <button class="modal-close" onclick="closeModal('modal-datathon')">✕</button>
       <h3 style="color: var(--accent-yellow); margin-bottom: 10px;">Дататон</h3>
       <p style="color: var(--text-muted); line-height: 1.6;">
-        Фокус на трех ключевых компетенциях: глубокая работа с датасетами, быстрая верстка фронтенда (HTML, CSS, Figma, JS basics) и экспертный питчинг.
+        Фокус на трех ключевых компетенциях: работа с датасетами, быстрая верстка фронтенда (HTML, CSS, Figma, JS basics) и экспертный питчинг.
       </p>
     </div>
   </div>
@@ -825,35 +886,49 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT: 3D ANIMATION & AUDIO SYNTHESIZER -->
+  <!-- JAVASCRIPT: LOUDER SYNTHESIZER, VOLUME CONTROL & ENLARGED 3D OBJECTS -->
   <script>
     /* ==========================================================================
-       1. WEB AUDIO API: HIGH-TECH AMBIENT MUSIC & AUDIBLE SFX SYNTHESIZER
+       1. WEB AUDIO API: HIGH-TECH AMBIENT SYNTH & MASTER VOLUME SLIDER
        ========================================================================== */
     let audioCtx = null;
+    let masterGainNode = null;
     let isAudioActive = true;
+    let currentVolume = 0.7; // Default 70% volume
     let bgInterval = null;
 
     function initAudio() {
       if (!audioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContext();
+        
+        masterGainNode = audioCtx.createGain();
+        masterGainNode.gain.setValueAtTime(currentVolume, audioCtx.currentTime);
+        masterGainNode.connect(audioCtx.destination);
       }
       if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
     }
 
-    // High Tech Ambient Music Loop Generator (Synth Arpeggio + Sub Drone)
+    function updateVolume(val) {
+      currentVolume = val / 100;
+      document.getElementById('volume-val').innerText = val + '%';
+      
+      if (masterGainNode && audioCtx) {
+        masterGainNode.gain.setTargetAtTime(isAudioActive ? currentVolume : 0, audioCtx.currentTime, 0.05);
+      }
+    }
+
+    // High Tech Ambient Synth Track (Arpeggiated Chords & Sub Synth Pulses)
     function startAmbientMusic() {
       if (!audioCtx || bgInterval) return;
 
-      const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25, 659.25]; // A Minor Tech Scale
+      const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25, 659.25, 783.99]; // A Minor Tech Scale
       let noteIndex = 0;
 
-      // Play ambient pulses
       bgInterval = setInterval(() => {
-        if (!isAudioActive || !audioCtx) return;
+        if (!isAudioActive || !audioCtx || !masterGainNode) return;
 
         try {
           const osc = audioCtx.createOscillator();
@@ -867,19 +942,20 @@
           osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
           filter.type = 'lowpass';
-          filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
+          filter.frequency.setValueAtTime(1600, audioCtx.currentTime);
 
-          gain.gain.setValueAtTime(0.025, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.35);
+          // Increased synth pulse loudness
+          gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.38);
 
           osc.connect(filter);
           filter.connect(gain);
-          gain.connect(audioCtx.destination);
+          gain.connect(masterGainNode);
 
           osc.start();
-          osc.stop(audioCtx.currentTime + 0.35);
+          osc.stop(audioCtx.currentTime + 0.38);
         } catch(e){}
-      }, 240);
+      }, 200);
     }
 
     function toggleAudio() {
@@ -890,19 +966,17 @@
       if (isAudioActive) {
         btn.classList.add('active');
         btn.innerHTML = `<span id="audio-icon">⚡</span> SOUND: ON`;
+        if (masterGainNode) masterGainNode.gain.setTargetAtTime(currentVolume, audioCtx.currentTime, 0.05);
         startAmbientMusic();
         playClickSFX();
       } else {
         btn.classList.remove('active');
         btn.innerHTML = `<span id="audio-icon">🔇</span> SOUND: OFF`;
-        if (bgInterval) {
-          clearInterval(bgInterval);
-          bgInterval = null;
-        }
+        if (masterGainNode) masterGainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
       }
     }
 
-    // SFX: Sharp Cyber Hover
+    // SFX: Cyber Hover Sound
     function playHoverSFX() {
       if (!isAudioActive) return;
       initAudio();
@@ -910,20 +984,20 @@
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(2200, audioCtx.currentTime + 0.04);
+        osc.frequency.setValueAtTime(1400, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(2400, audioCtx.currentTime + 0.05);
 
-        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
 
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.connect(masterGainNode);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.04);
+        osc.stop(audioCtx.currentTime + 0.05);
       } catch(e){}
     }
 
-    // SFX: Clean Click
+    // SFX: Click Sound
     function playClickSFX() {
       if (!isAudioActive) return;
       initAudio();
@@ -931,20 +1005,20 @@
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.06);
+        osc.frequency.setValueAtTime(950, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(350, audioCtx.currentTime + 0.08);
 
-        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.06);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
 
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.connect(masterGainNode);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.06);
+        osc.stop(audioCtx.currentTime + 0.08);
       } catch(e){}
     }
 
-    // SFX: Modal Futuristic Opening Sweep
+    // SFX: Modal Sci-Fi Sweep
     function playModalSFX() {
       if (!isAudioActive) return;
       initAudio();
@@ -954,25 +1028,25 @@
         const gain = audioCtx.createGain();
 
         osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
 
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(200, audioCtx.currentTime);
-        filter.frequency.exponentialRampToValueAtTime(1800, audioCtx.currentTime + 0.15);
+        filter.frequency.setValueAtTime(250, audioCtx.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(2200, audioCtx.currentTime + 0.2);
 
-        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.18);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
 
         osc.connect(filter);
         filter.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.connect(masterGainNode);
 
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.18);
+        osc.stop(audioCtx.currentTime + 0.22);
       } catch(e){}
     }
 
-    // Initialize audio on first click anywhere
+    // Auto-start ambient synth audio on initial interaction
     window.addEventListener('click', () => {
       initAudio();
       if (isAudioActive) startAmbientMusic();
@@ -980,7 +1054,7 @@
 
 
     /* ==========================================================================
-       2. 3D CANVAS EDGE ANIMATIONS (REAL-TIME ROTATING WIREFRAME OBJECTS)
+       2. 3D CANVAS: ENLARGED (2.5X LARGER) SCREEN EDGE OBJECTS
        ========================================================================== */
     const canvas = document.getElementById('canvas-3d');
     const ctx = canvas.getContext('2d');
@@ -992,13 +1066,12 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // 3D Polyhedron Math Projection
     class Wireframe3D {
       constructor(x, y, scale, color) {
         this.x = x;
         this.y = y;
         this.baseY = y;
-        this.scale = scale;
+        this.scale = scale; // Scaled up to ~90-110 (2.5x larger)
         this.color = color;
         this.rx = Math.random() * Math.PI;
         this.ry = Math.random() * Math.PI;
@@ -1010,7 +1083,7 @@
           [-1, -1,  1], [1, -1,  1], [1, 1,  1], [-1, 1,  1]
         ];
 
-        // Cube Edges
+        // Edges
         this.edges = [
           [0,1], [1,2], [2,3], [3,0],
           [4,5], [5,6], [6,7], [7,4],
@@ -1019,15 +1092,15 @@
       }
 
       update() {
-        this.rx += 0.01;
-        this.ry += 0.012;
-        this.floatOffset += 0.02;
-        this.y = this.baseY + Math.sin(this.floatOffset) * 15;
+        this.rx += 0.008;
+        this.ry += 0.01;
+        this.floatOffset += 0.018;
+        this.y = this.baseY + Math.sin(this.floatOffset) * 20;
       }
 
       draw() {
         const projected = [];
-        const fov = 200;
+        const fov = 240;
 
         for (let v of this.vertices) {
           // Rotate X
@@ -1038,7 +1111,7 @@
           let x2 = v[0] * Math.cos(this.ry) + z1 * Math.sin(this.ry);
           let z2 = -v[0] * Math.sin(this.ry) + z1 * Math.cos(this.ry);
 
-          // Project
+          // 3D Projection
           let distance = 3;
           let scaleFactor = fov / (fov + z2 + distance);
           let px = x2 * this.scale * scaleFactor + this.x;
@@ -1048,9 +1121,9 @@
         }
 
         ctx.strokeStyle = this.color;
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 2.8; // Thicker wireframe lines
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 22;  // Brighter neon glow
 
         for (let edge of this.edges) {
           const p1 = projected[edge[0]];
@@ -1065,20 +1138,19 @@
       }
     }
 
-    // Create 3D Objects positioned on left and right screen edges
+    // Enlarged 3D objects floating on left and right screen edges
     const objects3D = [
-      new Wireframe3D(70, 250, 35, '#00f0ff'),
-      new Wireframe3D(60, window.innerHeight - 250, 40, '#ccff00'),
-      new Wireframe3D(window.innerWidth - 70, 300, 42, '#ff0055'),
-      new Wireframe3D(window.innerWidth - 80, window.innerHeight - 200, 38, '#00f0ff')
+      new Wireframe3D(110, 280, 95, '#00f0ff'),
+      new Wireframe3D(100, window.innerHeight - 260, 100, '#ccff00'),
+      new Wireframe3D(window.innerWidth - 110, 320, 105, '#ff0055'),
+      new Wireframe3D(window.innerWidth - 120, window.innerHeight - 220, 90, '#00f0ff')
     ];
 
     function animate3D() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Reposition dynamically if resized
-      objects3D[2].x = canvas.width - 70;
-      objects3D[3].x = canvas.width - 80;
+      objects3D[2].x = canvas.width - 110;
+      objects3D[3].x = canvas.width - 120;
 
       for (let obj of objects3D) {
         obj.update();
