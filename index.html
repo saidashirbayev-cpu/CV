@@ -200,6 +200,23 @@
       z-index: 100;
     }
 
+    /* Mobile Hamburger Menu Toggle Button */
+    .hamburger-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      font-size: 1.3rem;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      line-height: 1;
+      transition: all 0.2s;
+    }
+    .hamburger-btn:active {
+      transform: scale(0.92);
+    }
+
     .logo {
       font-weight: 900;
       font-size: 1.1rem;
@@ -638,17 +655,105 @@
       .achievements-layout {
         grid-template-columns: 1fr;
       }
+      .side-photo-container {
+        max-width: 320px;
+        margin: 0 auto;
+      }
       .side-photo {
-        height: 350px;
+        height: 320px;
       }
       .header-actions {
         flex-wrap: wrap;
+        gap: 8px;
       }
     }
 
     @media (max-width: 768px) {
-      .paint-title { font-size: 3.2rem; letter-spacing: 4px; }
-      nav { display: none; }
+      header {
+        padding: 12px 4%;
+      }
+      .logo {
+        font-size: 0.95rem;
+      }
+      .hamburger-btn {
+        display: block;
+      }
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(5, 6, 8, 0.98);
+        flex-direction: column;
+        padding: 18px 0;
+        border-bottom: 2px solid var(--accent-yellow);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+      }
+      nav.mobile-active {
+        display: flex;
+      }
+      nav a {
+        margin: 10px 0;
+        font-size: 0.9rem;
+      }
+      .header-actions {
+        gap: 6px;
+      }
+      .audio-control-box {
+        padding: 4px 8px;
+        gap: 6px;
+      }
+      .volume-slider {
+        width: 45px;
+      }
+      .btn-audio {
+        padding: 4px 8px;
+        font-size: 0.65rem;
+      }
+      .btn-action {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+      }
+      .paint-title { 
+        font-size: clamp(2.2rem, 9vw, 4.5rem); 
+        letter-spacing: 3px; 
+      }
+      .section-padding { 
+        padding: 50px 5%; 
+      }
+      .metrics-bar {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 30px 5%;
+        gap: 12px;
+      }
+      .metric-card {
+        padding: 18px 14px;
+      }
+      .metric-number {
+        font-size: 2.2rem;
+      }
+      .modal-content {
+        padding: 25px 20px;
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .metrics-bar {
+        grid-template-columns: 1fr;
+      }
+      .volume-container {
+        display: none; /* Hide volume slider on ultra-narrow screens to keep sound ON/OFF toggle legible */
+      }
+      .cover-tags {
+        gap: 8px;
+      }
+      .paint-badge {
+        font-size: 0.7rem;
+        padding: 6px 12px;
+      }
     }
   </style>
 </head>
@@ -657,13 +762,14 @@
   <!-- 3D CANVAS FOR SCREEN EDGES -->
   <canvas id="canvas-3d"></canvas>
 
-  <!-- HEADER WITH AUDIO CONTROLLER & VOLUME SLIDER -->
+  <!-- HEADER WITH AUDIO CONTROLLER & MOBILE HAMBURGER MENU -->
   <header>
     <div class="logo">SAID<span>.ASHIRBAYEV</span></div>
-    <nav>
-      <a href="#achievements" onmouseenter="playHoverSFX()">Достижения</a>
-      <a href="#skills" onmouseenter="playHoverSFX()">Навыки</a>
-      <a href="#contact" onmouseenter="playHoverSFX()">Контакты</a>
+    <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">☰</button>
+    <nav id="nav-menu">
+      <a href="#achievements" onclick="closeMobileMenu()" onmouseenter="playHoverSFX()">Достижения</a>
+      <a href="#skills" onclick="closeMobileMenu()" onmouseenter="playHoverSFX()">Навыки</a>
+      <a href="#contact" onclick="closeMobileMenu()" onmouseenter="playHoverSFX()">Контакты</a>
     </nav>
     <div class="header-actions">
       <!-- Audio & Volume Box -->
@@ -772,7 +878,7 @@
       <!-- Right Column: Profile Photo 00 (9).jpg with dynamic SVG Fallback -->
       <div class="side-photo-container" onmouseenter="playHoverSFX()">
         <img 
-          src="00 (9).JPG" 
+          src="00 (9).jpg" 
           alt="Said Ashirbayev Profile" 
           class="side-photo"
           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'400\' viewBox=\'0 0 300 400\'><rect width=\'100%\' height=\'100%\' fill=\'%230d0e14\'/><rect x=\'12\' y=\'12\' width=\'276\' height=\'376\' fill=\'none\' stroke=\'%2300f0ff\' stroke-width=\'2\' stroke-dasharray=\'8,4\'/><circle cx=\'150\' cy=\'150\' r=\'65\' fill=\'%23151821\' stroke=\'%23ccff00\' stroke-width=\'3\'/><text x=\'150\' y=\'165\' font-family=\'sans-serif\' font-size=\'46\' font-weight=\'bold\' fill=\'%23ccff00\' text-anchor=\'middle\'>SA</text><text x=\'150\' y=\'270\' font-family=\'sans-serif\' font-size=\'18\' font-weight=\'bold\' fill=\'%2300f0ff\' text-anchor=\'middle\'>SAID ASHIRBAYEV</text><text x=\'150\' y=\'305\' font-family=\'sans-serif\' font-size=\'13\' font-weight=\'bold\' fill=\'%237b8599\' text-anchor=\'middle\'>ZIMRAN CUP CONTENDER</text></svg>';"
@@ -886,7 +992,7 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT: LOUDER SYNTHESIZER, VOLUME CONTROL & ENLARGED 3D OBJECTS -->
+  <!-- JAVASCRIPT: LOUDER SYNTHESIZER, VOLUME CONTROL & MOBILE RESPONSIVE ENGINE -->
   <script>
     /* ==========================================================================
        1. WEB AUDIO API: HIGH-TECH AMBIENT SYNTH & MASTER VOLUME SLIDER
@@ -1025,36 +1131,35 @@
       try {
         const osc = audioCtx.createOscillator();
         const filter = audioCtx.createBiquadFilter();
-        const gain = audioCtx.createGain();
+    // Auto-start ambient synth audio on initial user touch or click
+    ['click', 'touchstart'].forEach(eventType => {
+      window.addEventListener(eventType, () => {
+        initAudio();
+        if (isAudioActive) startAmbientMusic();
+      }, { once: true });
+    });
 
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(250, audioCtx.currentTime);
-        filter.frequency.exponentialRampToValueAtTime(2200, audioCtx.currentTime + 0.2);
-
-        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
-
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(masterGainNode);
-
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.22);
-      } catch(e){}
+    // Mobile Hamburger Navigation Toggle
+    function toggleMobileMenu() {
+      playClickSFX();
+      const nav = document.getElementById('nav-menu');
+      const btn = document.getElementById('hamburger-btn');
+      if (nav && btn) {
+        nav.classList.toggle('mobile-active');
+        btn.innerText = nav.classList.contains('mobile-active') ? '✕' : '☰';
+      }
     }
 
-    // Auto-start ambient synth audio on initial interaction
-    window.addEventListener('click', () => {
-      initAudio();
-      if (isAudioActive) startAmbientMusic();
-    }, { once: true });
+    function closeMobileMenu() {
+      const nav = document.getElementById('nav-menu');
+      const btn = document.getElementById('hamburger-btn');
+      if (nav) nav.classList.remove('mobile-active');
+      if (btn) btn.innerText = '☰';
+    }
 
 
     /* ==========================================================================
-       2. 3D CANVAS: ENLARGED (2.5X LARGER) SCREEN EDGE OBJECTS
+       2. 3D CANVAS: MOBILE RESPONSIVE EDGE OBJECTS
        ========================================================================== */
     const canvas = document.getElementById('canvas-3d');
     const ctx = canvas.getContext('2d');
@@ -1064,6 +1169,7 @@
       canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('orientationchange', resizeCanvas);
     resizeCanvas();
 
     class Wireframe3D {
@@ -1121,9 +1227,9 @@
         }
 
         ctx.strokeStyle = this.color;
-        ctx.lineWidth = 2.8; // Thicker wireframe lines
+        ctx.lineWidth = 1.5; // Compact line width for fine wireframe
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 22;  // Brighter neon glow
+        ctx.shadowBlur = 10;  // Subtle neon glow
 
         for (let edge of this.edges) {
           const p1 = projected[edge[0]];
@@ -1138,19 +1244,32 @@
       }
     }
 
-    // Enlarged 3D objects floating on left and right screen edges
     const objects3D = [
-      new Wireframe3D(110, 280, 95, '#00f0ff'),
-      new Wireframe3D(100, window.innerHeight - 260, 100, '#ccff00'),
-      new Wireframe3D(window.innerWidth - 110, 320, 105, '#ff0055'),
-      new Wireframe3D(window.innerWidth - 120, window.innerHeight - 220, 90, '#00f0ff')
+      new Wireframe3D(50, 280, 35, '#00f0ff'),
+      new Wireframe3D(45, window.innerHeight - 260, 38, '#ccff00'),
+      new Wireframe3D(window.innerWidth - 50, 320, 40, '#ff0055'),
+      new Wireframe3D(window.innerWidth - 45, window.innerHeight - 220, 32, '#00f0ff')
     ];
 
     function animate3D() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      objects3D[2].x = canvas.width - 110;
-      objects3D[3].x = canvas.width - 120;
+      const isMobile = canvas.width <= 768;
+      const leftX = isMobile ? 20 : 50;
+      const rightX = isMobile ? canvas.width - 20 : canvas.width - 50;
+      const objectScale = isMobile ? 20 : 35;
+
+      objects3D[0].x = leftX;
+      objects3D[0].scale = objectScale;
+
+      objects3D[1].x = leftX - 4;
+      objects3D[1].scale = objectScale;
+
+      objects3D[2].x = rightX;
+      objects3D[2].scale = objectScale;
+
+      objects3D[3].x = rightX + 4;
+      objects3D[3].scale = objectScale;
 
       for (let obj of objects3D) {
         obj.update();
