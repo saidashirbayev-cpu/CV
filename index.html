@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Said Ashirbayev | Zimran Business Cup CV</title>
 
-  <!-- Google Fonts: Montserrat + Edgy Paint/Glitch Display Fonts -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,900&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
       overflow-x: hidden;
     }
 
-    /* Background 3D Canvas Layer */
+    /* BACKGROUND 3D CANVAS - Z-INDEX ПОДНЯТ НА 50 ЧТОБЫ КУБЫ БЫЛИ ВИДНЫ НА ПЕРВОМ ЭКРАНЕ */
     #canvas3d {
       position: fixed;
       top: 0;
@@ -54,7 +54,7 @@
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 2;
+      z-index: 50;
     }
 
     body::before {
@@ -69,9 +69,7 @@
       pointer-events: none;
     }
 
-    /* ==========================================================================
-       HEADER & COMPACT MOBILE NAVIGATION (Питч CV кнопка убрана из шапки)
-       ========================================================================== */
+    /* HEADER */
     header {
       position: fixed;
       top: 0; width: 100%;
@@ -191,9 +189,7 @@
       text-transform: uppercase;
     }
 
-    /* ==========================================================================
-       1. HERO SECTION
-       ========================================================================== */
+    /* HERO SECTION */
     .cover-banner {
       position: relative;
       width: 100%;
@@ -206,7 +202,7 @@
       padding: 100px 20px 60px;
       overflow: hidden;
       border-bottom: 3px solid var(--accent-yellow);
-      background: radial-gradient(circle at 50% 30%, rgba(0, 240, 255, 0.06) 0%, rgba(5, 6, 8, 0.98) 70%);
+      background: radial-gradient(circle at 50% 30%, rgba(0, 240, 255, 0.05) 0%, rgba(5, 6, 8, 0.98) 75%);
       z-index: 3;
     }
 
@@ -295,9 +291,7 @@
       60% { transform: translateY(-4px); }
     }
 
-    /* ==========================================================================
-       2. METRICS BAR
-       ========================================================================== */
+    /* METRICS BAR */
     .metrics-bar {
       padding: 40px 6%;
       background: #08090e;
@@ -340,9 +334,7 @@
       font-weight: 700;
     }
 
-    /* ==========================================================================
-       3. ACHIEVEMENTS & SIDE PHOTO (00 (9).JPG)
-       ========================================================================== */
+    /* ACHIEVEMENTS & SIDE PHOTO 00 (9).JPG */
     .section-padding {
       padding: 70px 6%;
       position: relative;
@@ -425,7 +417,7 @@
       text-transform: uppercase;
     }
 
-    /* Side Photo Frame for 00 (9).JPG */
+    /* Side Photo Container */
     .side-photo-container {
       position: relative;
       display: flex;
@@ -485,9 +477,7 @@
       text-transform: uppercase;
     }
 
-    /* ==========================================================================
-       4. SKILLS MATRIX
-       ========================================================================== */
+    /* SKILLS MATRIX */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -530,9 +520,7 @@
       color: #d1d5db;
     }
 
-    /* ==========================================================================
-       5. FOOTER & CONTACTS
-       ========================================================================== */
+    /* FOOTER */
     footer {
       padding: 50px 6% 30px;
       background: #030405;
@@ -566,9 +554,7 @@
       color: var(--accent-yellow);
     }
 
-    /* ==========================================================================
-       MODALS
-       ========================================================================== */
+    /* MODALS */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -610,26 +596,21 @@
       cursor: pointer;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 900px) {
-      .achievements-wrapper {
-        grid-template-columns: 1fr;
-      }
-      .side-photo-frame {
-        margin: 20px auto 0;
-      }
+      .achievements-wrapper { grid-template-columns: 1fr; }
+      .side-photo-frame { margin: 20px auto 0; }
     }
 
     @media (max-width: 768px) {
       nav.desktop-nav { display: none; }
       .mobile-burger { display: block; }
-      .volume-box { display: none; } /* Hide volume slider on small phones to keep header super clean */
+      .volume-box { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- BACKGROUND 3D CANVAS FOR COMPACT EDGE POLYHEDRONS -->
+  <!-- BACKGROUND 3D CANVAS FOR COMPACT EDGE POLYHEDRONS (Z-INDEX 50) -->
   <canvas id="canvas3d"></canvas>
 
   <!-- HEADER -->
@@ -748,7 +729,7 @@
         </div>
       </div>
 
-      <!-- PHOTO 00 (9).JPG HERE -->
+      <!-- PHOTO 00 (9).JPG -->
       <div class="side-photo-container">
         <div class="side-photo-frame">
           <img src="00 (9).JPG" alt="Said Ashirbayev" class="side-photo" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'side-photo-fallback\'><div class=\'fallback-avatar\'>SA</div><div class=\'fallback-text\'>SAID ASHIRBAYEV</div></div>';">
@@ -860,22 +841,15 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT: WEB AUDIO & 3D EDGE CANVAS -->
+  <!-- JAVASCRIPT -->
   <script>
-    /* ==========================================================================
-       MOBILE MENU TOGGLE
-       ========================================================================== */
     function toggleMobileMenu() {
-      const dropdown = document.getElementById('mobile-dropdown');
-      dropdown.classList.toggle('active');
+      document.getElementById('mobile-dropdown').classList.toggle('active');
     }
     function closeMobileMenu() {
       document.getElementById('mobile-dropdown').classList.remove('active');
     }
 
-    /* ==========================================================================
-       MODAL CONTROLS
-       ========================================================================== */
     function openModal(id) {
       playModalSFX();
       document.getElementById(id).classList.add('active');
@@ -892,57 +866,41 @@
     });
 
     /* ==========================================================================
-       STABLE SINGLETON WEB AUDIO ENGINE (FIXED MOBILE RESTART BUG & LOW PITCH SFX)
+       STABLE PRO AUDIO ENGINE (LOW PITCH WARM HI-TECH SFX)
        ========================================================================== */
     let audioCtx = null;
     let isMuted = true;
     let masterGain = null;
-    let ambientOsc1 = null, ambientOsc2 = null, ambientFilter = null;
-    let isAudioInitialized = false;
+    let ambientOsc1 = null, ambientOsc2 = null, ambientGain = null;
 
-    function initAudioContext() {
-      if (isAudioInitialized && audioCtx) {
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-        return;
-      }
-
-      try {
+    function initAudio() {
+      if (!audioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContext();
-
         masterGain = audioCtx.createGain();
         masterGain.gain.setValueAtTime(0.5, audioCtx.currentTime);
         masterGain.connect(audioCtx.destination);
-
-        isAudioInitialized = true;
-      } catch(e) {
-        console.log("Audio not supported");
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
       }
     }
 
     function toggleAudio() {
-      initAudioContext();
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
+      initAudio();
       isMuted = !isMuted;
       const btn = document.getElementById('audio-toggle');
-      const text = document.getElementById('sound-status-text');
 
       if (isMuted) {
         btn.classList.remove('active');
         btn.innerHTML = `<span id="audio-icon">🔇</span> <span id="sound-status-text">SOUND: OFF</span>`;
-        if (masterGain) masterGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
-        stopAmbientMusic();
+        if (ambientGain) ambientGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
       } else {
         btn.classList.add('active');
         btn.innerHTML = `<span id="audio-icon">⚡</span> <span id="sound-status-text">SOUND: ON</span>`;
-        const vol = parseFloat(document.getElementById('volume-slider').value) || 0.5;
-        if (masterGain) masterGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.1);
-        startAmbientMusic();
+        startAmbient();
+        const sliderVal = parseFloat(document.getElementById('volume-slider').value) || 0.5;
+        if (ambientGain) ambientGain.gain.setTargetAtTime(sliderVal * 0.15, audioCtx.currentTime, 0.1);
         playClickSFX();
       }
     }
@@ -953,59 +911,46 @@
       }
     }
 
-    // Continuous, Non-Restarting Low Ambient Synth Drone
-    function startAmbientMusic() {
-      if (!audioCtx || ambientOsc1) return; // Prevent multiple instances on mobile!
+    function startAmbient() {
+      if (!audioCtx || ambientOsc1) return;
 
       ambientOsc1 = audioCtx.createOscillator();
       ambientOsc2 = audioCtx.createOscillator();
-      ambientFilter = audioCtx.createBiquadFilter();
-      const synthGain = audioCtx.createGain();
+      const filter = audioCtx.createBiquadFilter();
+      ambientGain = audioCtx.createGain();
 
       ambientOsc1.type = 'sine';
-      ambientOsc1.frequency.setValueAtTime(65.41, audioCtx.currentTime); // Deep C2
+      ambientOsc1.frequency.setValueAtTime(65.41, audioCtx.currentTime); // C2 Sub
 
       ambientOsc2.type = 'triangle';
-      ambientOsc2.frequency.setValueAtTime(98.00, audioCtx.currentTime); // Deep G2
+      ambientOsc2.frequency.setValueAtTime(98.00, audioCtx.currentTime); // G2 Sub
 
-      ambientFilter.type = 'lowpass';
-      ambientFilter.frequency.setValueAtTime(240, audioCtx.currentTime);
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(220, audioCtx.currentTime);
 
-      synthGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      ambientGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
 
-      ambientOsc1.connect(ambientFilter);
-      ambientOsc2.connect(ambientFilter);
-      ambientFilter.connect(synthGain);
-      synthGain.connect(masterGain);
+      ambientOsc1.connect(filter);
+      ambientOsc2.connect(filter);
+      filter.connect(ambientGain);
+      ambientGain.connect(masterGain);
 
       ambientOsc1.start();
       ambientOsc2.start();
     }
 
-    function stopAmbientMusic() {
-      if (ambientOsc1) {
-        try { ambientOsc1.stop(); ambientOsc1.disconnect(); } catch(e){}
-        ambientOsc1 = null;
-      }
-      if (ambientOsc2) {
-        try { ambientOsc2.stop(); ambientOsc2.disconnect(); } catch(e){}
-        ambientOsc2 = null;
-      }
-    }
-
-    /* LOW-PITCHED HIGH-TECH PROFESSIONAL SFX */
+    /* LOW PITCH PROFESSIONAL SFX */
     function playHoverSFX() {
       if (isMuted || !audioCtx) return;
       try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'sine';
-        // Low warm frequency hover thud (180Hz -> 140Hz)
-        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(140, audioCtx.currentTime + 0.04);
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.04);
 
         gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
 
         osc.connect(gain);
         gain.connect(masterGain);
@@ -1020,12 +965,11 @@
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'triangle';
-        // Low tactile executive click (150Hz -> 75Hz)
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(75, audioCtx.currentTime + 0.05);
+        osc.frequency.setValueAtTime(130, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(55, audioCtx.currentTime + 0.05);
 
         gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
 
         osc.connect(gain);
         gain.connect(masterGain);
@@ -1038,31 +982,27 @@
       if (isMuted || !audioCtx) return;
       try {
         const osc = audioCtx.createOscillator();
-        const filter = audioCtx.createBiquadFilter();
         const gain = audioCtx.createGain();
-
         osc.type = 'sine';
-        // Deep lowpass sub sweep (80Hz -> 160Hz)
-        osc.frequency.setValueAtTime(80, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(160, audioCtx.currentTime + 0.12);
-
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(250, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(85, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(170, audioCtx.currentTime + 0.12);
 
         gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
 
-        osc.connect(filter);
-        filter.connect(gain);
+        osc.connect(gain);
         gain.connect(masterGain);
-
         osc.start();
         osc.stop(audioCtx.currentTime + 0.12);
       } catch(e){}
     }
 
+    // Auto initialize audio on first user touch / click
+    window.addEventListener('click', () => { initAudio(); }, { once: true });
+    window.addEventListener('touchstart', () => { initAudio(); }, { once: true });
+
     /* ==========================================================================
-       CANVAS 3D ANIMATED WIREFRAMES ALONG SCREEN EDGES
+       CANVAS 3D CUBES (FULL SCREEN POSITIONING INC. HERO BANNER)
        ========================================================================== */
     const canvas = document.getElementById('canvas3d');
     const ctx = canvas.getContext('2d');
@@ -1080,17 +1020,17 @@
 
     function initShapes() {
       shapes = [];
-      const numShapes = 6;
+      const numShapes = 8;
       for (let i = 0; i < numShapes; i++) {
         const isLeft = i % 2 === 0;
         shapes.push({
-          x: isLeft ? 35 : width - 35,
-          y: (height / numShapes) * i + 80,
-          size: 28, // Compact size
+          x: isLeft ? 40 : width - 40,
+          y: (height / (numShapes - 1)) * i, // РАВНОМЕРНО ОТ ОДНОГО КРАЯ (y=0 HERO) ДО НИЗА
+          size: 28,
           rotX: Math.random() * Math.PI,
           rotY: Math.random() * Math.PI,
-          speedX: (Math.random() - 0.5) * 0.015,
-          speedY: (Math.random() - 0.5) * 0.015,
+          speedX: (Math.random() - 0.5) * 0.012,
+          speedY: (Math.random() - 0.5) * 0.012,
           color: i % 3 === 0 ? '#ccff00' : (i % 3 === 1 ? '#00f0ff' : '#ff0055')
         });
       }
@@ -1098,7 +1038,6 @@
 
     initShapes();
 
-    // Cube Vertices
     const cubeVertices = [
       [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
       [-1, -1, 1],  [1, -1, 1],  [1, 1, 1],  [-1, 1, 1]
@@ -1119,18 +1058,16 @@
 
         ctx.save();
         ctx.strokeStyle = s.color;
-        ctx.lineWidth = 1.2;
+        ctx.lineWidth = 1.3;
         ctx.shadowColor = s.color;
         ctx.shadowBlur = 8;
 
         const projected = cubeVertices.map(v => {
           let x = v[0], y = v[1], z = v[2];
 
-          // Y Rotation
           let x1 = x * Math.cos(s.rotY) + z * Math.sin(s.rotY);
           let z1 = -x * Math.sin(s.rotY) + z * Math.cos(s.rotY);
 
-          // X Rotation
           let y2 = y * Math.cos(s.rotX) - z1 * Math.sin(s.rotX);
           let z2 = y * Math.sin(s.rotX) + z1 * Math.cos(s.rotX);
 
