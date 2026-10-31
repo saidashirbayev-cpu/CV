@@ -221,19 +221,19 @@
     @keyframes titleGlow {
       0% {
         text-shadow: 
-          0 0 10px rgba(204, 255, 0, 0.3),
-          0 0 25px rgba(204, 255, 0, 0.15);
+          0 0 10px rgba(204, 255, 0, 0.4),
+          0 0 25px rgba(204, 255, 0, 0.2);
       }
       50% {
         text-shadow: 
-          0 0 18px rgba(204, 255, 0, 0.6),
-          0 0 35px rgba(0, 240, 255, 0.3),
-          0 0 50px rgba(204, 255, 0, 0.2);
+          0 0 20px rgba(204, 255, 0, 0.8),
+          0 0 40px rgba(0, 240, 255, 0.4),
+          0 0 60px rgba(204, 255, 0, 0.2);
       }
       100% {
         text-shadow: 
-          0 0 12px rgba(0, 240, 255, 0.5),
-          0 0 30px rgba(204, 255, 0, 0.4);
+          0 0 15px rgba(0, 240, 255, 0.7),
+          0 0 35px rgba(204, 255, 0, 0.5);
       }
     }
 
@@ -650,7 +650,7 @@
       </button>
 
       <div class="volume-box">
-        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.05" value="0.5" oninput="changeVolume(this.value)">
+        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.05" value="0.7" oninput="changeVolume(this.value)">
       </div>
 
       <button class="mobile-burger" onclick="toggleMobileMenu()">☰</button>
@@ -887,29 +887,23 @@
     });
 
     /* ==========================================================================
-       ROBUST WEB AUDIO ENGINE (ENABLED BY DEFAULT)
+       ROBUST AUDIBLE WEB AUDIO SYNTHESIZER (HIGH FREQUENCIES FOR MOBILE PHONES)
        ========================================================================== */
     let audioCtx = null;
-    let isMuted = false; // ЗВУК ВКЛЮЧЕН ИЗНАЧАЛЬНО
-    let masterGain = null;
-    let ambientOsc1 = null, ambientOsc2 = null, ambientGain = null;
+    let isMuted = false; // Звук включен по умолчанию
+    let masterVolume = 0.7;
+    let ambientTimer = null;
 
     function initAudioEngine() {
       if (!audioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContext();
-
-        masterGain = audioCtx.createGain();
-        masterGain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-        masterGain.connect(audioCtx.destination);
       }
-
       if (audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
-
-      if (!isMuted && !ambientOsc1) {
-        startAmbientDrone();
+      if (!isMuted && !ambientTimer) {
+        startAmbientArpeggio();
       }
     }
 
@@ -921,57 +915,20 @@
       if (isMuted) {
         btn.classList.remove('active');
         btn.innerHTML = `<span id="audio-icon">🔇</span> <span id="sound-status-text">SOUND: OFF</span>`;
-        if (ambientGain) ambientGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+        if (ambientTimer) { clearInterval(ambientTimer); ambientTimer = null; }
       } else {
         btn.classList.add('active');
         btn.innerHTML = `<span id="audio-icon">⚡</span> <span id="sound-status-text">SOUND: ON</span>`;
-        if (!ambientOsc1) startAmbientDrone();
-        const sliderVal = parseFloat(document.getElementById('volume-slider').value) || 0.5;
-        if (ambientGain) ambientGain.gain.setTargetAtTime(sliderVal * 0.12, audioCtx.currentTime, 0.1);
+        startAmbientArpeggio();
         playClickSFX();
       }
     }
 
     function changeVolume(val) {
-      const vol = parseFloat(val) || 0.5;
-      if (masterGain && audioCtx) {
-        masterGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.05);
-      }
+      masterVolume = parseFloat(val) || 0.7;
     }
 
-    function startAmbientDrone() {
-      if (!audioCtx || ambientOsc1) return;
-
-      try {
-        ambientOsc1 = audioCtx.createOscillator();
-        ambientOsc2 = audioCtx.createOscillator();
-        const filter = audioCtx.createBiquadFilter();
-        ambientGain = audioCtx.createGain();
-
-        // Deep Low Synth Ambient Drone
-        ambientOsc1.type = 'sine';
-        ambientOsc1.frequency.setValueAtTime(73.42, audioCtx.currentTime); // D2
-
-        ambientOsc2.type = 'triangle';
-        ambientOsc2.frequency.setValueAtTime(110.00, audioCtx.currentTime); // A2
-
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(220, audioCtx.currentTime);
-
-        const sliderVal = parseFloat(document.getElementById('volume-slider').value) || 0.5;
-        ambientGain.gain.setValueAtTime(sliderVal * 0.12, audioCtx.currentTime);
-
-        ambientOsc1.connect(filter);
-        ambientOsc2.connect(filter);
-        filter.connect(ambientGain);
-        ambientGain.connect(masterGain);
-
-        ambientOsc1.start();
-        ambientOsc2.start();
-      } catch(e){}
-    }
-
-    /* LOW PITCH PROFESSIONAL SFX */
+    /* РАБОТАЮЩИЕ И ОТЧЕТЛИВО СЛЫШИМЫЕ SFX (300 Гц - 800 Гц) */
     function playHoverSFX() {
       if (isMuted) return;
       initAudioEngine();
@@ -981,15 +938,15 @@
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
 
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(220, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.05);
+        osc.type = 'triangle'; // Слышимый мягкий сигнал
+        osc.frequency.setValueAtTime(450, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(250, audioCtx.currentTime + 0.05);
 
-        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.15 * masterVolume, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
 
         osc.connect(gain);
-        gain.connect(masterGain);
+        gain.connect(audioCtx.destination);
 
         osc.start();
         osc.stop(audioCtx.currentTime + 0.05);
@@ -1005,18 +962,18 @@
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
 
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 0.08);
+        osc.type = 'square'; // Отчетливый кибер-клик
+        osc.frequency.setValueAtTime(750, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(320, audioCtx.currentTime + 0.07);
 
-        gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.12 * masterVolume, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.07);
 
         osc.connect(gain);
-        gain.connect(masterGain);
+        gain.connect(audioCtx.destination);
 
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.08);
+        osc.stop(audioCtx.currentTime + 0.07);
       } catch(e){}
     }
 
@@ -1029,23 +986,52 @@
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
 
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(90, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(220, audioCtx.currentTime + 0.12);
+        osc.type = 'sawtooth'; // Легкий свип
+        osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(650, audioCtx.currentTime + 0.12);
 
-        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08 * masterVolume, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
 
         osc.connect(gain);
-        gain.connect(masterGain);
+        gain.connect(audioCtx.destination);
 
         osc.start();
         osc.stop(audioCtx.currentTime + 0.12);
       } catch(e){}
     }
 
-    // РАЗБЛОКИРОВКА АУДИОКОНТЕКСТА БРАУЗЕРА ПРИ ПЕРВОМ КЛИКЕ / КАСАНИИ / СКРОЛЛЕ
-    ['click', 'touchstart', 'scroll', 'pointerdown'].forEach(evt => {
+    /* СЛЫШИМЫЙ ПРИЯТНЫЙ ФОНОВЫЙ ХАЙ-ТЕК АРПЕДЖИАТОР (C4, E4, G4) */
+    function startAmbientArpeggio() {
+      if (ambientTimer) return;
+      const notes = [329.63, 392.00, 493.88, 523.25]; // E4, G4, B4, C5 (слышимы на любых динамиках)
+      let noteIndex = 0;
+
+      ambientTimer = setInterval(() => {
+        if (isMuted || !audioCtx) return;
+        try {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(notes[noteIndex], audioCtx.currentTime);
+
+          gain.gain.setValueAtTime(0.03 * masterVolume, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.6);
+
+          noteIndex = (noteIndex + 1) % notes.length;
+        } catch(e){}
+      }, 700);
+    }
+
+    // Автоматическая разблокировка звука при первом прикосновении / клике
+    ['click', 'touchstart', 'mousedown', 'keydown'].forEach(evt => {
       window.addEventListener(evt, () => { initAudioEngine(); }, { once: true });
     });
 
