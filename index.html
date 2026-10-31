@@ -200,7 +200,6 @@
       z-index: 100;
     }
 
-    /* Mobile Hamburger Menu Toggle Button */
     .hamburger-btn {
       display: none;
       background: transparent;
@@ -407,7 +406,6 @@
       margin-bottom: 50px;
     }
 
-    /* Grid Layout: Left Cards + Right Side Photo */
     .achievements-layout {
       display: grid;
       grid-template-columns: 2.1fr 1fr;
@@ -471,7 +469,6 @@
       letter-spacing: 1px;
     }
 
-    /* Right Side Cyber Photo Frame with Fallback Support */
     .side-photo-container {
       background: var(--bg-card);
       border: 1px solid rgba(0, 240, 255, 0.35);
@@ -745,7 +742,7 @@
         grid-template-columns: 1fr;
       }
       .volume-container {
-        display: none; /* Hide volume slider on ultra-narrow screens to keep sound ON/OFF toggle legible */
+        display: none;
       }
       .cover-tags {
         gap: 8px;
@@ -762,7 +759,7 @@
   <!-- 3D CANVAS FOR SCREEN EDGES -->
   <canvas id="canvas-3d"></canvas>
 
-  <!-- HEADER WITH AUDIO CONTROLLER & MOBILE HAMBURGER MENU -->
+  <!-- HEADER WITH AUDIO CONTROLLER & MOBILE MENU -->
   <header>
     <div class="logo">SAID<span>.ASHIRBAYEV</span></div>
     <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">☰</button>
@@ -772,7 +769,7 @@
       <a href="#contact" onclick="closeMobileMenu()" onmouseenter="playHoverSFX()">Контакты</a>
     </nav>
     <div class="header-actions">
-      <!-- Audio & Volume Box -->
+      <!-- Audio & Volume Control -->
       <div class="audio-control-box">
         <button class="btn-audio active" id="audio-toggle" onclick="toggleAudio()" title="Включить / Выключить звук">
           <span id="audio-icon">⚡</span> SOUND: ON
@@ -992,15 +989,15 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT: LOUDER SYNTHESIZER, VOLUME CONTROL & MOBILE RESPONSIVE ENGINE -->
+  <!-- JAVASCRIPT: WEB AUDIO SYNTH, SFX, 3D WIREFRAME CANVAS & MOBILE NAV -->
   <script>
     /* ==========================================================================
-       1. WEB AUDIO API: HIGH-TECH AMBIENT SYNTH & MASTER VOLUME SLIDER
+       1. WEB AUDIO API: HIGH-TECH SYNTHESIZER & MASTER VOLUME
        ========================================================================== */
     let audioCtx = null;
     let masterGainNode = null;
     let isAudioActive = true;
-    let currentVolume = 0.7; // Default 70% volume
+    let currentVolume = 0.7; // 70% volume by default
     let bgInterval = null;
 
     function initAudio() {
@@ -1026,11 +1023,11 @@
       }
     }
 
-    // High Tech Ambient Synth Track (Arpeggiated Chords & Sub Synth Pulses)
+    // High Tech Ambient Synth Track Loop
     function startAmbientMusic() {
       if (!audioCtx || bgInterval) return;
 
-      const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25, 659.25, 783.99]; // A Minor Tech Scale
+      const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25, 659.25, 783.99]; // A Minor Scale
       let noteIndex = 0;
 
       bgInterval = setInterval(() => {
@@ -1050,7 +1047,6 @@
           filter.type = 'lowpass';
           filter.frequency.setValueAtTime(1600, audioCtx.currentTime);
 
-          // Increased synth pulse loudness
           gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
           gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.38);
 
@@ -1061,7 +1057,7 @@
           osc.start();
           osc.stop(audioCtx.currentTime + 0.38);
         } catch(e){}
-      }, 200);
+      }, 250);
     }
 
     function toggleAudio() {
@@ -1082,7 +1078,7 @@
       }
     }
 
-    // SFX: Cyber Hover Sound
+    // SFX: Cyber Hover
     function playHoverSFX() {
       if (!isAudioActive) return;
       initAudio();
@@ -1103,7 +1099,7 @@
       } catch(e){}
     }
 
-    // SFX: Click Sound
+    // SFX: Click
     function playClickSFX() {
       if (!isAudioActive) return;
       initAudio();
@@ -1131,7 +1127,28 @@
       try {
         const osc = audioCtx.createOscillator();
         const filter = audioCtx.createBiquadFilter();
-    // Auto-start ambient synth audio on initial user touch or click
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(250, audioCtx.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(1600, audioCtx.currentTime + 0.12);
+
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGainNode);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.15);
+      } catch(e){}
+    }
+
+    // User gesture listeners to start Web Audio safely
     ['click', 'touchstart'].forEach(eventType => {
       window.addEventListener(eventType, () => {
         initAudio();
@@ -1159,7 +1176,7 @@
 
 
     /* ==========================================================================
-       2. 3D CANVAS: MOBILE RESPONSIVE EDGE OBJECTS
+       2. 3D CANVAS: EDGE WIREFRAME CUBES ANIMATION
        ========================================================================== */
     const canvas = document.getElementById('canvas-3d');
     const ctx = canvas.getContext('2d');
@@ -1177,19 +1194,17 @@
         this.x = x;
         this.y = y;
         this.baseY = y;
-        this.scale = scale; // Scaled up to ~90-110 (2.5x larger)
+        this.scale = scale;
         this.color = color;
         this.rx = Math.random() * Math.PI;
         this.ry = Math.random() * Math.PI;
         this.floatOffset = Math.random() * Math.PI * 2;
 
-        // Cube 3D Vertices
         this.vertices = [
           [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
           [-1, -1,  1], [1, -1,  1], [1, 1,  1], [-1, 1,  1]
         ];
 
-        // Edges
         this.edges = [
           [0,1], [1,2], [2,3], [3,0],
           [4,5], [5,6], [6,7], [7,4],
@@ -1209,15 +1224,12 @@
         const fov = 240;
 
         for (let v of this.vertices) {
-          // Rotate X
           let y1 = v[1] * Math.cos(this.rx) - v[2] * Math.sin(this.rx);
           let z1 = v[1] * Math.sin(this.rx) + v[2] * Math.cos(this.rx);
 
-          // Rotate Y
           let x2 = v[0] * Math.cos(this.ry) + z1 * Math.sin(this.ry);
           let z2 = -v[0] * Math.sin(this.ry) + z1 * Math.cos(this.ry);
 
-          // 3D Projection
           let distance = 3;
           let scaleFactor = fov / (fov + z2 + distance);
           let px = x2 * this.scale * scaleFactor + this.x;
@@ -1227,9 +1239,9 @@
         }
 
         ctx.strokeStyle = this.color;
-        ctx.lineWidth = 1.5; // Compact line width for fine wireframe
+        ctx.lineWidth = 1.5;
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 10;  // Subtle neon glow
+        ctx.shadowBlur = 10;
 
         for (let edge of this.edges) {
           const p1 = projected[edge[0]];
@@ -1255,8 +1267,8 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const isMobile = canvas.width <= 768;
-      const leftX = isMobile ? 20 : 50;
-      const rightX = isMobile ? canvas.width - 20 : canvas.width - 50;
+      const leftX = isMobile ? 22 : 50;
+      const rightX = isMobile ? canvas.width - 22 : canvas.width - 50;
       const objectScale = isMobile ? 20 : 35;
 
       objects3D[0].x = leftX;
