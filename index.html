@@ -46,7 +46,7 @@
       overflow-x: hidden;
     }
 
-    /* BACKGROUND 3D CANVAS FOR COMPACT EDGE POLYHEDRONS */
+    /* 3D CANVAS FOR SCREEN EDGES */
     #canvas3d {
       position: fixed;
       top: 0;
@@ -69,7 +69,7 @@
       pointer-events: none;
     }
 
-    /* HEADER */
+    /* HEADER & CONTROLS */
     header {
       position: fixed;
       top: 0; width: 100%;
@@ -112,16 +112,26 @@
     .header-controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+    }
+
+    .audio-control-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(13, 14, 20, 0.8);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 6px 12px;
+      border-radius: 4px;
     }
 
     .btn-audio {
       padding: 6px 12px;
-      background: rgba(0, 240, 255, 0.08);
+      background: rgba(0, 240, 255, 0.12);
       border: 1px solid var(--accent-cyan);
       color: var(--accent-cyan);
       font-weight: 800;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       letter-spacing: 1px;
       text-transform: uppercase;
       cursor: pointer;
@@ -134,23 +144,35 @@
     .btn-audio.active {
       background: var(--accent-cyan);
       color: #000;
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
-    }
-
-    .volume-box {
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.04);
-      padding: 4px 8px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
     }
 
     .volume-slider {
-      width: 55px;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 70px;
       height: 4px;
-      accent-color: var(--accent-yellow);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      outline: none;
       cursor: pointer;
+    }
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-yellow);
+      cursor: pointer;
+      box-shadow: 0 0 6px var(--accent-yellow);
+    }
+
+    .volume-val {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--accent-yellow);
+      min-width: 32px;
     }
 
     .mobile-burger {
@@ -189,7 +211,7 @@
       text-transform: uppercase;
     }
 
-    /* HERO SECTION */
+    /* HERO BANNER */
     .cover-banner {
       position: relative;
       width: 100%;
@@ -206,7 +228,6 @@
       z-index: 3;
     }
 
-    /* ДИНАМИЧНОЕ ПЛАВНОЕ СВЕЧЕНИЕ ДЛЯ SAID ASHIRBAYEV */
     .paint-title {
       font-family: var(--font-paint);
       font-size: clamp(3.2rem, 9vw, 8rem);
@@ -354,7 +375,7 @@
       font-weight: 700;
     }
 
-    /* ACHIEVEMENTS & SIDE PHOTO 00 (9).JPG */
+    /* ACHIEVEMENTS & SIDE PHOTO */
     .section-padding {
       padding: 70px 6%;
       position: relative;
@@ -437,7 +458,6 @@
       text-transform: uppercase;
     }
 
-    /* Side Photo Container */
     .side-photo-container {
       position: relative;
       display: flex;
@@ -467,34 +487,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-    }
-
-    .side-photo-fallback {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle, #151821 0%, #050608 100%);
-      padding: 20px;
-      text-align: center;
-    }
-
-    .fallback-avatar {
-      font-family: var(--font-heavy);
-      font-size: 3rem;
-      color: var(--accent-yellow);
-      text-shadow: 2px 2px 0px var(--accent-pink);
-    }
-
-    .fallback-text {
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: var(--accent-cyan);
-      letter-spacing: 2px;
-      margin-top: 10px;
-      text-transform: uppercase;
     }
 
     /* SKILLS MATRIX */
@@ -624,7 +616,7 @@
     @media (max-width: 768px) {
       nav.desktop-nav { display: none; }
       .mobile-burger { display: block; }
-      .volume-box { display: none; }
+      .volume-slider { width: 45px; }
     }
   </style>
 </head>
@@ -644,19 +636,17 @@
     </nav>
 
     <div class="header-controls">
-      <!-- ВКЛЮЧЕНО ПО УМОЛЧАНИЮ (active) -->
-      <button class="btn-audio active" id="audio-toggle" onclick="toggleAudio()" title="Переключить звук">
-        <span id="audio-icon">⚡</span> <span id="sound-status-text">SOUND: ON</span>
-      </button>
-
-      <div class="volume-box">
-        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.05" value="0.7" oninput="changeVolume(this.value)">
+      <div class="audio-control-box">
+        <button class="btn-audio active" id="audio-toggle" onclick="toggleAudio()" title="Переключить звук">
+          <span id="audio-icon">⚡</span> <span id="sound-status-text">SOUND: ON</span>
+        </button>
+        <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70" oninput="updateVolume(this.value)">
+        <span id="volume-val" class="volume-val">70%</span>
       </div>
 
       <button class="mobile-burger" onclick="toggleMobileMenu()">☰</button>
     </div>
 
-    <!-- Dropdown Menu for Mobile -->
     <div class="mobile-menu-dropdown" id="mobile-dropdown">
       <a href="#achievements" onclick="closeMobileMenu()">Достижения</a>
       <a href="#skills" onclick="closeMobileMenu()">Навыки</a>
@@ -753,7 +743,7 @@
       <!-- PHOTO 00 (9).JPG -->
       <div class="side-photo-container">
         <div class="side-photo-frame">
-          <img src="00 (9).JPG" alt="Said Ashirbayev" class="side-photo" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'side-photo-fallback\'><div class=\'fallback-avatar\'>SA</div><div class=\'fallback-text\'>SAID ASHIRBAYEV</div></div>';">
+          <img src="00 (9).JPG" alt="Said Ashirbayev Profile" class="side-photo" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'400\' viewBox=\'0 0 300 400\'><rect width=\'100%\' height=\'100%\' fill=\'%230d0e14\'/><rect x=\'12\' y=\'12\' width=\'276\' height=\'376\' fill=\'none\' stroke=\'%2300f0ff\' stroke-width=\'2\' stroke-dasharray=\'8,4\'/><circle cx=\'150\' cy=\'150\' r=\'65\' fill=\'%23151821\' stroke=\'%23ccff00\' stroke-width=\'3\'/><text x=\'150\' y=\'165\' font-family=\'sans-serif\' font-size=\'46\' font-weight=\'bold\' fill=\'%23ccff00\' text-anchor=\'middle\'>SA</text><text x=\'150\' y=\'270\' font-family=\'sans-serif\' font-size=\'18\' font-weight=\'bold\' fill=\'%2300f0ff\' text-anchor=\'middle\'>SAID ASHIRBAYEV</text><text x=\'150\' y=\'305\' font-family=\'sans-serif\' font-size=\'13\' font-weight=\'bold\' fill=\'%237b8599\' text-anchor=\'middle\'>ZIMRAN CUP CONTENDER</text></svg>';">
         </div>
       </div>
     </div>
@@ -887,152 +877,169 @@
     });
 
     /* ==========================================================================
-       ROBUST AUDIBLE WEB AUDIO SYNTHESIZER (HIGH FREQUENCIES FOR MOBILE PHONES)
+       ORIGINAL WEB AUDIO SYNTHESIZER & AMBIENT MUSIC TRACK FROM CV (2)
        ========================================================================== */
     let audioCtx = null;
-    let isMuted = false; // Звук включен по умолчанию
-    let masterVolume = 0.7;
-    let ambientTimer = null;
+    let masterGainNode = null;
+    let isAudioActive = true;
+    let currentVolume = 0.7;
+    let bgInterval = null;
 
-    function initAudioEngine() {
+    function initAudio() {
       if (!audioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContext();
+        
+        masterGainNode = audioCtx.createGain();
+        masterGainNode.gain.setValueAtTime(currentVolume, audioCtx.currentTime);
+        masterGainNode.connect(audioCtx.destination);
       }
-      if (audioCtx.state === 'suspended') {
+      if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
-      if (!isMuted && !ambientTimer) {
-        startAmbientArpeggio();
+    }
+
+    function updateVolume(val) {
+      currentVolume = val / 100;
+      const volText = document.getElementById('volume-val');
+      if (volText) volText.innerText = val + '%';
+      
+      if (masterGainNode && audioCtx) {
+        masterGainNode.gain.setTargetAtTime(isAudioActive ? currentVolume : 0, audioCtx.currentTime, 0.05);
       }
+    }
+
+    /* ВОССТАНОВЛЕННЫЙ ОРИГИНАЛЬНЫЙ КИБЕР-АРПЕДЖИАТОР (A MINOR SCALE) */
+    function startAmbientMusic() {
+      if (!audioCtx || bgInterval) return;
+
+      const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25, 659.25, 783.99]; // A Minor Scale
+      let noteIndex = 0;
+
+      bgInterval = setInterval(() => {
+        if (!isAudioActive || !audioCtx || !masterGainNode) return;
+
+        try {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          const filter = audioCtx.createBiquadFilter();
+
+          const freq = notes[noteIndex % notes.length];
+          noteIndex++;
+
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(1600, audioCtx.currentTime);
+
+          gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.38);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(masterGainNode);
+
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.38);
+        } catch(e){}
+      }, 250);
     }
 
     function toggleAudio() {
-      initAudioEngine();
-      isMuted = !isMuted;
+      initAudio();
+      isAudioActive = !isAudioActive;
       const btn = document.getElementById('audio-toggle');
 
-      if (isMuted) {
-        btn.classList.remove('active');
-        btn.innerHTML = `<span id="audio-icon">🔇</span> <span id="sound-status-text">SOUND: OFF</span>`;
-        if (ambientTimer) { clearInterval(ambientTimer); ambientTimer = null; }
-      } else {
+      if (isAudioActive) {
         btn.classList.add('active');
         btn.innerHTML = `<span id="audio-icon">⚡</span> <span id="sound-status-text">SOUND: ON</span>`;
-        startAmbientArpeggio();
+        if (masterGainNode) masterGainNode.gain.setTargetAtTime(currentVolume, audioCtx.currentTime, 0.05);
+        startAmbientMusic();
         playClickSFX();
+      } else {
+        btn.classList.remove('active');
+        btn.innerHTML = `<span id="audio-icon">🔇</span> <span id="sound-status-text">SOUND: OFF</span>`;
+        if (masterGainNode) masterGainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
       }
     }
 
-    function changeVolume(val) {
-      masterVolume = parseFloat(val) || 0.7;
-    }
-
-    /* РАБОТАЮЩИЕ И ОТЧЕТЛИВО СЛЫШИМЫЕ SFX (300 Гц - 800 Гц) */
+    // SFX: Cyber Hover
     function playHoverSFX() {
-      if (isMuted) return;
-      initAudioEngine();
-      if (!audioCtx) return;
-
+      if (!isAudioActive) return;
+      initAudio();
       try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1400, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(2400, audioCtx.currentTime + 0.05);
 
-        osc.type = 'triangle'; // Слышимый мягкий сигнал
-        osc.frequency.setValueAtTime(450, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(250, audioCtx.currentTime + 0.05);
-
-        gain.gain.setValueAtTime(0.15 * masterVolume, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
 
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
+        gain.connect(masterGainNode);
         osc.start();
         osc.stop(audioCtx.currentTime + 0.05);
       } catch(e){}
     }
 
+    // SFX: Click
     function playClickSFX() {
-      if (isMuted) return;
-      initAudioEngine();
-      if (!audioCtx) return;
-
+      if (!isAudioActive) return;
+      initAudio();
       try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(950, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(350, audioCtx.currentTime + 0.08);
 
-        osc.type = 'square'; // Отчетливый кибер-клик
-        osc.frequency.setValueAtTime(750, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(320, audioCtx.currentTime + 0.07);
-
-        gain.gain.setValueAtTime(0.12 * masterVolume, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.07);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
 
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
+        gain.connect(masterGainNode);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.07);
+        osc.stop(audioCtx.currentTime + 0.08);
       } catch(e){}
     }
 
+    // SFX: Modal Sci-Fi Sweep
     function playModalSFX() {
-      if (isMuted) return;
-      initAudioEngine();
-      if (!audioCtx) return;
-
+      if (!isAudioActive) return;
+      initAudio();
       try {
         const osc = audioCtx.createOscillator();
+        const filter = audioCtx.createBiquadFilter();
         const gain = audioCtx.createGain();
 
-        osc.type = 'sawtooth'; // Легкий свип
-        osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(650, audioCtx.currentTime + 0.12);
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
 
-        gain.gain.setValueAtTime(0.08 * masterVolume, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(250, audioCtx.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(1600, audioCtx.currentTime + 0.12);
 
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGainNode);
 
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.12);
+        osc.stop(audioCtx.currentTime + 0.15);
       } catch(e){}
     }
 
-    /* СЛЫШИМЫЙ ПРИЯТНЫЙ ФОНОВЫЙ ХАЙ-ТЕК АРПЕДЖИАТОР (C4, E4, G4) */
-    function startAmbientArpeggio() {
-      if (ambientTimer) return;
-      const notes = [329.63, 392.00, 493.88, 523.25]; // E4, G4, B4, C5 (слышимы на любых динамиках)
-      let noteIndex = 0;
-
-      ambientTimer = setInterval(() => {
-        if (isMuted || !audioCtx) return;
-        try {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(notes[noteIndex], audioCtx.currentTime);
-
-          gain.gain.setValueAtTime(0.03 * masterVolume, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
-
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-
-          osc.start();
-          osc.stop(audioCtx.currentTime + 0.6);
-
-          noteIndex = (noteIndex + 1) % notes.length;
-        } catch(e){}
-      }, 700);
-    }
-
-    // Автоматическая разблокировка звука при первом прикосновении / клике
+    // Авто-активация звука по прикосновению/клику
     ['click', 'touchstart', 'mousedown', 'keydown'].forEach(evt => {
-      window.addEventListener(evt, () => { initAudioEngine(); }, { once: true });
+      window.addEventListener(evt, () => {
+        initAudio();
+        if (isAudioActive) startAmbientMusic();
+      }, { once: true });
     });
 
     /* ==========================================================================
