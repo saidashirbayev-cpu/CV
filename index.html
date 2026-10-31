@@ -46,7 +46,7 @@
       overflow-x: hidden;
     }
 
-    /* BACKGROUND 3D CANVAS - Z-INDEX ПОДНЯТ НА 50 ЧТОБЫ КУБЫ БЫЛИ ВИДНЫ НА ПЕРВОМ ЭКРАНЕ */
+    /* BACKGROUND 3D CANVAS FOR COMPACT EDGE POLYHEDRONS */
     #canvas3d {
       position: fixed;
       top: 0;
@@ -206,15 +206,16 @@
       z-index: 3;
     }
 
+    /* УВЕЛИЧЕННЫЙ ЗАГОЛОВОК БЕЗ ГЛИТЧ-ЭФФЕКТА (БЕЗ РОЗОВОЙ И СИНЕЙ ТЕНИ) */
     .paint-title {
       font-family: var(--font-paint);
-      font-size: clamp(2.5rem, 7vw, 6.5rem);
+      font-size: clamp(3.5rem, 10vw, 8.8rem);
       color: var(--accent-yellow);
       text-transform: uppercase;
-      line-height: 1;
-      letter-spacing: 4px;
-      text-shadow: 3px 3px 0px var(--accent-pink), -3px -3px 0px var(--accent-cyan);
-      margin-bottom: 20px;
+      line-height: 0.95;
+      letter-spacing: 6px;
+      text-shadow: none; /* Глитч убран */
+      margin-bottom: 25px;
     }
 
     .sub-paint {
@@ -866,20 +867,16 @@
     });
 
     /* ==========================================================================
-       STABLE PRO AUDIO ENGINE (LOW PITCH WARM HI-TECH SFX)
+       FAILSAFE WEB AUDIO SYNTHESIZER ENGINE (GUARANTEED AUDIBLE SOUND)
        ========================================================================== */
     let audioCtx = null;
     let isMuted = true;
-    let masterGain = null;
-    let ambientOsc1 = null, ambientOsc2 = null, ambientGain = null;
+    let masterVolume = 0.5;
 
     function initAudio() {
       if (!audioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContext();
-        masterGain = audioCtx.createGain();
-        masterGain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-        masterGain.connect(audioCtx.destination);
       }
       if (audioCtx.state === 'suspended') {
         audioCtx.resume();
@@ -894,110 +891,92 @@
       if (isMuted) {
         btn.classList.remove('active');
         btn.innerHTML = `<span id="audio-icon">🔇</span> <span id="sound-status-text">SOUND: OFF</span>`;
-        if (ambientGain) ambientGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
       } else {
         btn.classList.add('active');
         btn.innerHTML = `<span id="audio-icon">⚡</span> <span id="sound-status-text">SOUND: ON</span>`;
-        startAmbient();
-        const sliderVal = parseFloat(document.getElementById('volume-slider').value) || 0.5;
-        if (ambientGain) ambientGain.gain.setTargetAtTime(sliderVal * 0.15, audioCtx.currentTime, 0.1);
+        // Проигрываем мгновенный тестовый звук при включении!
         playClickSFX();
       }
     }
 
     function changeVolume(val) {
-      if (masterGain && audioCtx && !isMuted) {
-        masterGain.gain.setTargetAtTime(parseFloat(val), audioCtx.currentTime, 0.05);
-      }
+      masterVolume = parseFloat(val) || 0.5;
     }
 
-    function startAmbient() {
-      if (!audioCtx || ambientOsc1) return;
-
-      ambientOsc1 = audioCtx.createOscillator();
-      ambientOsc2 = audioCtx.createOscillator();
-      const filter = audioCtx.createBiquadFilter();
-      ambientGain = audioCtx.createGain();
-
-      ambientOsc1.type = 'sine';
-      ambientOsc1.frequency.setValueAtTime(65.41, audioCtx.currentTime); // C2 Sub
-
-      ambientOsc2.type = 'triangle';
-      ambientOsc2.frequency.setValueAtTime(98.00, audioCtx.currentTime); // G2 Sub
-
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(220, audioCtx.currentTime);
-
-      ambientGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-
-      ambientOsc1.connect(filter);
-      ambientOsc2.connect(filter);
-      filter.connect(ambientGain);
-      ambientGain.connect(masterGain);
-
-      ambientOsc1.start();
-      ambientOsc2.start();
-    }
-
-    /* LOW PITCH PROFESSIONAL SFX */
+    /* DIRECT AUDIBLE LOW PITCH SOUND EFFECTS */
     function playHoverSFX() {
-      if (isMuted || !audioCtx) return;
+      if (isMuted) return;
+      initAudio();
+      if (!audioCtx) return;
+
       try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
+
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.04);
+        osc.frequency.setValueAtTime(160, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(90, audioCtx.currentTime + 0.05);
 
-        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
-
-        osc.connect(gain);
-        gain.connect(masterGain);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.04);
-      } catch(e){}
-    }
-
-    function playClickSFX() {
-      if (isMuted || !audioCtx) return;
-      try {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(130, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(55, audioCtx.currentTime + 0.05);
-
-        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.15 * masterVolume, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
 
         osc.connect(gain);
-        gain.connect(masterGain);
+        gain.connect(audioCtx.destination); // Прямое подключение к динамикам!
+
         osc.start();
         osc.stop(audioCtx.currentTime + 0.05);
       } catch(e){}
     }
 
-    function playModalSFX() {
-      if (isMuted || !audioCtx) return;
+    function playClickSFX() {
+      if (isMuted) return;
+      initAudio();
+      if (!audioCtx) return;
+
       try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(85, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(170, audioCtx.currentTime + 0.12);
 
-        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.08);
+
+        gain.gain.setValueAtTime(0.3 * masterVolume, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
 
         osc.connect(gain);
-        gain.connect(masterGain);
+        gain.connect(audioCtx.destination);
+
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.12);
+        osc.stop(audioCtx.currentTime + 0.08);
       } catch(e){}
     }
 
-    // Auto initialize audio on first user touch / click
+    function playModalSFX() {
+      if (isMuted) return;
+      initAudio();
+      if (!audioCtx) return;
+
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(90, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(210, audioCtx.currentTime + 0.14);
+
+        gain.gain.setValueAtTime(0.25 * masterVolume, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.14);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.14);
+      } catch(e){}
+    }
+
+    // Инициализация звука по любому клику или касанию экрана
     window.addEventListener('click', () => { initAudio(); }, { once: true });
     window.addEventListener('touchstart', () => { initAudio(); }, { once: true });
 
@@ -1025,7 +1004,7 @@
         const isLeft = i % 2 === 0;
         shapes.push({
           x: isLeft ? 40 : width - 40,
-          y: (height / (numShapes - 1)) * i, // РАВНОМЕРНО ОТ ОДНОГО КРАЯ (y=0 HERO) ДО НИЗА
+          y: (height / (numShapes - 1)) * i,
           size: 28,
           rotX: Math.random() * Math.PI,
           rotY: Math.random() * Math.PI,
