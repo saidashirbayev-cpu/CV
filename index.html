@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Said Ashirbayev | Zimran Business Cup CV</title>
 
-  <!-- Google Fonts: Montserrat + Edgy Paint/Glitch Display Fonts -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,900&family=Permanent+Marker&family=Rubik+Glitch&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,900&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* Подключение кастомного шрифта .otf */
     @font-face {
       font-family: 'Forgotten November';
       src: url('Forgotten November.otf') format('opentype');
@@ -20,7 +19,7 @@
     }
 
     /* ==========================================================================
-       VARIABLES & HARDCORE COLOR PALETTE
+       COLOR PALETTE & VARIABLES
        ========================================================================== */
     :root {
       --bg-main: #050608;
@@ -34,8 +33,7 @@
       --border-tech: rgba(204, 255, 0, 0.25);
       
       --font-main: 'Montserrat', sans-serif;
-      --font-paint: 'Forgotten November', cursive;
-      --font-glitch: 'Rubik Glitch', cursive;
+      --font-paint: 'Forgotten November', cursive, sans-serif;
       --font-heavy: 'Dela Gothic One', sans-serif;
     }
 
@@ -66,8 +64,19 @@
       pointer-events: none;
     }
 
+    /* 3D Canvas Overlay */
+    #canvas-3d {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+    }
+
     /* ==========================================================================
-       1. TOP HERO COVER
+       1. HERO SECTION
        ========================================================================== */
     .cover-banner {
       position: relative;
@@ -81,10 +90,9 @@
       padding: 40px 20px;
       overflow: hidden;
       border-bottom: 3px solid var(--accent-yellow);
-      background: radial-gradient(circle at 50% 30%, rgba(0, 240, 255, 0.08) 0%, rgba(5, 6, 8, 0.98) 70%);
+      background: radial-gradient(circle at 50% 30%, rgba(0, 240, 255, 0.08) 0%, rgba(5, 6, 8, 0.98) 75%);
     }
 
-    /* Abstract Cyber Mesh Background */
     .hero-glow-bg {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -101,7 +109,6 @@
       max-width: 1100px;
     }
 
-    /* Raw Paint-Stroke Typography */
     .paint-title {
       font-family: var(--font-paint);
       font-size: clamp(3rem, 8vw, 7rem);
@@ -109,7 +116,6 @@
       text-transform: uppercase;
       line-height: 1;
       letter-spacing: 8px;
-      transform: rotate(0deg);
       text-shadow: 
         3px 3px 0px var(--accent-pink),
         -3px -3px 0px var(--accent-cyan);
@@ -155,7 +161,6 @@
       border-color: var(--accent-yellow);
     }
 
-    /* Scroll Down Indicator */
     .scroll-indicator {
       position: absolute;
       bottom: 30px;
@@ -180,7 +185,7 @@
     }
 
     /* ==========================================================================
-       2. HEADER NAVIGATION & AUDIO CONTROLS
+       2. HEADER NAVIGATION & SOUND CONTROL
        ========================================================================== */
     header {
       position: fixed;
@@ -189,7 +194,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(5, 6, 8, 0.88);
+      background: rgba(5, 6, 8, 0.9);
       backdrop-filter: blur(15px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       z-index: 100;
@@ -228,7 +233,7 @@
 
     .btn-audio {
       padding: 8px 16px;
-      background: rgba(0, 240, 255, 0.05);
+      background: rgba(0, 240, 255, 0.1);
       border: 1px solid var(--accent-cyan);
       color: var(--accent-cyan);
       font-weight: 800;
@@ -241,10 +246,10 @@
       gap: 6px;
       transition: all 0.3s;
     }
-    .btn-audio:hover, .btn-audio.active {
+    .btn-audio.active {
       background: var(--accent-cyan);
       color: #000;
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.6);
     }
 
     .btn-action {
@@ -267,15 +272,17 @@
     }
 
     /* ==========================================================================
-       3. NUMBERS & INSERTION METRICS
+       3. METRICS BAR
        ========================================================================== */
     .metrics-bar {
       padding: 50px 8%;
       background: #08090e;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
+      position: relative;
+      z-index: 5;
     }
 
     .metric-card {
@@ -314,9 +321,13 @@
     }
 
     /* ==========================================================================
-       4. INTERACTIVE CASE COMPETITIONS & ACHIEVEMENTS
+       4. CASE COMPETITIONS & SIDE PHOTO LAYOUT
        ========================================================================== */
-    .section-padding { padding: 90px 8%; }
+    .section-padding {
+      padding: 90px 8%;
+      position: relative;
+      z-index: 5;
+    }
 
     .section-subtitle {
       color: var(--accent-yellow);
@@ -334,16 +345,24 @@
       margin-bottom: 50px;
     }
 
+    /* Container holding Cards + Right Side Photo */
+    .achievements-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
     .grid-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
     }
 
     .card {
       background: var(--bg-card);
       border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 35px;
+      padding: 30px;
       cursor: pointer;
       position: relative;
       transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -369,7 +388,7 @@
     }
 
     .card-title {
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
       margin-bottom: 12px;
       line-height: 1.25;
@@ -390,12 +409,53 @@
       letter-spacing: 1px;
     }
 
+    /* Right Side Cyber Photo Framing */
+    .side-photo-container {
+      background: var(--bg-card);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .side-photo-container:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-yellow);
+    }
+
+    .side-photo {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      filter: contrast(105%) brightness(95%);
+      border: 2px solid var(--accent-cyan);
+      box-shadow: 8px 8px 0px var(--accent-pink);
+    }
+
+    .photo-caption-title {
+      font-family: var(--font-heavy);
+      font-size: 1.1rem;
+      color: var(--accent-yellow);
+      margin-top: 18px;
+      text-transform: uppercase;
+    }
+
+    .photo-caption-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-weight: 700;
+    }
+
     /* ==========================================================================
        5. SKILLS MATRIX
        ========================================================================== */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
     }
 
@@ -406,7 +466,7 @@
       transition: border-color 0.3s;
     }
     .skill-box:hover {
-      border-color: rgba(204, 255, 0, 0.3);
+      border-color: rgba(204, 255, 0, 0.4);
     }
 
     .skill-box-title {
@@ -431,23 +491,22 @@
     }
 
     .tag {
-      padding: 7px 14px;
+      padding: 8px 16px;
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.08);
       font-size: 0.8rem;
       font-weight: 700;
       color: #d1d5db;
       transition: all 0.3s;
-      cursor: default;
     }
     .tag:hover {
       border-color: var(--accent-cyan);
       color: var(--accent-cyan);
-      background: rgba(0, 240, 255, 0.05);
+      background: rgba(0, 240, 255, 0.08);
     }
 
     /* ==========================================================================
-       6. MODAL POPUP WINDOWS
+       6. MODAL POPUPS
        ========================================================================== */
     .modal-overlay {
       position: fixed;
@@ -494,34 +553,15 @@
     .modal-close:hover { color: var(--accent-pink); }
 
     /* ==========================================================================
-       7. FOOTER & PROFILE PHOTO
+       7. FOOTER
        ========================================================================== */
     footer {
       padding: 70px 8% 40px;
       background: #030405;
       border-top: 1px solid rgba(255,255,255,0.05);
       text-align: center;
-    }
-
-    .footer-photo-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 30px;
-    }
-
-    .footer-photo {
-      width: 200px;
-      height: 250px;
-      object-fit: cover;
-      filter: contrast(110%) brightness(95%);
-      border: 2px solid var(--accent-cyan);
-      box-shadow: 8px 8px 0px var(--accent-pink);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .footer-photo:hover {
-      transform: translateY(-5px);
-      box-shadow: 10px 10px 0px var(--accent-yellow);
+      position: relative;
+      z-index: 5;
     }
 
     .contact-btns {
@@ -529,7 +569,7 @@
       justify-content: center;
       gap: 15px;
       flex-wrap: wrap;
-      margin-top: 25px;
+      margin-top: 30px;
     }
 
     .c-btn {
@@ -548,6 +588,15 @@
       color: var(--accent-yellow);
     }
 
+    @media (max-width: 992px) {
+      .achievements-layout {
+        grid-template-columns: 1fr;
+      }
+      .side-photo {
+        height: 320px;
+      }
+    }
+
     @media (max-width: 768px) {
       .paint-title { font-size: 3.2rem; letter-spacing: 4px; }
       nav { display: none; }
@@ -555,6 +604,9 @@
   </style>
 </head>
 <body>
+
+  <!-- 3D CANVAS FOR SCREEN EDGES -->
+  <canvas id="canvas-3d"></canvas>
 
   <!-- HEADER -->
   <header>
@@ -565,14 +617,14 @@
       <a href="#contact" onmouseenter="playHoverSFX()">Контакты</a>
     </nav>
     <div class="header-actions">
-      <button class="btn-audio" id="audio-toggle" onclick="toggleAudio()" title="Переключить фоновый звук и SFX">
-        <span id="audio-icon">⚡</span> SOUND: OFF
+      <button class="btn-audio active" id="audio-toggle" onclick="toggleAudio()" title="Включить / Выключить звук и музыку">
+        <span id="audio-icon">⚡</span> SOUND: ON
       </button>
       <button class="btn-action" onclick="openModal('modal-pitch')">Питч CV</button>
     </div>
   </header>
 
-  <!-- 1. FULL-WIDTH HERO COVER BANNER -->
+  <!-- 1. HERO BANNER -->
   <section class="cover-banner">
     <div class="hero-glow-bg"></div>
 
@@ -596,7 +648,7 @@
     </a>
   </section>
 
-  <!-- 2. NUMBERS & INSERTION METRICS (SAT/IELTS REMOVED) -->
+  <!-- 2. METRICS BAR -->
   <section class="metrics-bar" id="metrics">
     <div class="metric-card" onmouseenter="playHoverSFX()">
       <div class="metric-number">4-е</div>
@@ -616,46 +668,56 @@
     </div>
   </section>
 
-  <!-- 3. CASE COMPETITIONS & ACHIEVEMENTS -->
+  <!-- 3. CASE COMPETITIONS & SIDE PHOTO (00 (9).JPG) -->
   <section class="section-padding" id="achievements">
     <div class="section-subtitle">// Track Record</div>
     <h2 class="section-title">Кейс-чемпионаты и Победы</h2>
 
-    <div class="grid-cards">
-      <div class="card" onclick="openModal('modal-integrity')" onmouseenter="playHoverSFX()">
-        <div>
-          <div class="card-tag">Case Competition</div>
-          <h3 class="card-title">4-е Место — Integrity Case Championship</h3>
-          <p class="card-desc">Решение реальных бизнес-кейсов, Root-Cause анализ и защита стратегии перед топ-жюри.</p>
+    <div class="achievements-layout">
+      <!-- Left Column: Case Cards -->
+      <div class="grid-cards">
+        <div class="card" onclick="openModal('modal-integrity')" onmouseenter="playHoverSFX()">
+          <div>
+            <div class="card-tag">Case Competition</div>
+            <h3 class="card-title">4-е Место — Integrity Case Championship</h3>
+            <p class="card-desc">Решение реальных бизнес-кейсов, Root-Cause анализ и защита стратегии перед топ-жюри.</p>
+          </div>
+          <div class="card-link">Подробнее ➔</div>
         </div>
-        <div class="card-link">Подробнее ➔</div>
+
+        <div class="card" onclick="openModal('modal-3mt')" onmouseenter="playHoverSFX()">
+          <div>
+            <div class="card-tag">Pitching & Speaking</div>
+            <h3 class="card-title">2-е Место — 3 Minute Thesis (3MT)</h3>
+            <p class="card-desc">Победитель чемпионата по упаковке сложных концептов в 3-минутный убедительный питч.</p>
+          </div>
+          <div class="card-link">Подробнее ➔</div>
+        </div>
+
+        <div class="card" onclick="openModal('modal-igem')" onmouseenter="playHoverSFX()">
+          <div>
+            <div class="card-tag">Global Competition</div>
+            <h3 class="card-title">Gold Medal — iGEM Paris</h3>
+            <p class="card-desc">Лидерство в Human Practices. Защита биотех-проекта по переработке пластика на финал-саммите во Франции.</p>
+          </div>
+          <div class="card-link">Подробнее ➔</div>
+        </div>
+
+        <div class="card" onclick="openModal('modal-datathon')" onmouseenter="playHoverSFX()">
+          <div>
+            <div class="card-tag">Data & Pitching</div>
+            <h3 class="card-title">Участник Дататона</h3>
+            <p class="card-desc">Работа с датасетами, верстка фронтенда под проект и презентация (питчинг) готового решения.</p>
+          </div>
+          <div class="card-link">Подробнее ➔</div>
+        </div>
       </div>
 
-      <div class="card" onclick="openModal('modal-3mt')" onmouseenter="playHoverSFX()">
-        <div>
-          <div class="card-tag">Pitching & Speaking</div>
-          <h3 class="card-title">2-е Место — 3 Minute Thesis (3MT)</h3>
-          <p class="card-desc">Победитель чемпионата по упаковке сложных концептов в 3-минутный убедительный питч.</p>
-        </div>
-        <div class="card-link">Подробнее ➔</div>
-      </div>
-
-      <div class="card" onclick="openModal('modal-igem')" onmouseenter="playHoverSFX()">
-        <div>
-          <div class="card-tag">Global Competition</div>
-          <h3 class="card-title">Gold Medal — iGEM Paris</h3>
-          <p class="card-desc">Лидерство в Human Practices. Защита биотех-проекта по переработке пластика на финал-саммите во Франции.</p>
-        </div>
-        <div class="card-link">Подробнее ➔</div>
-      </div>
-
-      <div class="card" onclick="openModal('modal-datathon')" onmouseenter="playHoverSFX()">
-        <div>
-          <div class="card-tag">Data & Pitching</div>
-          <h3 class="card-title">Участник Дататона</h3>
-          <p class="card-desc">Работа с датасетами, разработка фронтенд-интерфейсов и защита решений на питчинге.</p>
-        </div>
-        <div class="card-link">Подробнее ➔</div>
+      <!-- Right Column: Profile Photo 00 (9).jpg -->
+      <div class="side-photo-container" onmouseenter="playHoverSFX()">
+        <img src="00 (9).jpg" alt="Said Ashirbayev Profile" class="side-photo">
+        <div class="photo-caption-title">Said Ashirbayev</div>
+        <div class="photo-caption-sub">Zimran Cup Contender</div>
       </div>
     </div>
   </section>
@@ -671,8 +733,8 @@
         <div class="skill-tags">
           <span class="tag">HTML</span>
           <span class="tag">CSS</span>
-          <span class="tag">JS Basics</span>
           <span class="tag">Figma</span>
+          <span class="tag">JS Basics</span>
         </div>
       </div>
 
@@ -682,7 +744,6 @@
           <span class="tag">Management & Coordination Exp</span>
           <span class="tag">Работа с датасетами</span>
           <span class="tag">Case Solving</span>
-          <span class="tag">Проверка гипотез</span>
         </div>
       </div>
 
@@ -698,12 +759,8 @@
     </div>
   </section>
 
-  <!-- FOOTER WITH IMG_6748 PROFILE PHOTO -->
+  <!-- FOOTER -->
   <footer id="contact">
-    <div class="footer-photo-container">
-      <img src="IMG_6748.jpg" alt="Said Ashirbayev Profile" class="footer-photo" onmouseenter="playHoverSFX()">
-    </div>
-
     <div class="section-subtitle">// Zimran Business Cup Ready</div>
     <h2 style="font-family: var(--font-heavy); font-size: 2.2rem; color: var(--accent-yellow); margin-bottom: 15px;">ГОТОВ К СТАРТУ</h2>
     <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">Открыт к формированию мощной команды для победы на хакатоне.</p>
@@ -751,7 +808,7 @@
       <button class="modal-close" onclick="closeModal('modal-datathon')">✕</button>
       <h3 style="color: var(--accent-yellow); margin-bottom: 10px;">Дататон</h3>
       <p style="color: var(--text-muted); line-height: 1.6;">
-        Фокус на трех ключевых компетенциях: глубокая работа с датасетами, быстрая верстка фронтенда и убедительный питчинг проекта перед экспертным жюри.
+        Фокус на трех ключевых компетенциях: глубокая работа с датасетами, быстрая верстка фронтенда (HTML, CSS, Figma, JS basics) и экспертный питчинг.
       </p>
     </div>
   </div>
@@ -761,148 +818,279 @@
       <button class="modal-close" onclick="closeModal('modal-pitch')">✕</button>
       <h3 style="color: var(--accent-yellow); margin-bottom: 15px;">Питч для Zimran Cup</h3>
       <p style="color: var(--text-muted); line-height: 1.6;">
-        <strong>1. Frontend MVP:</strong> Умение оперативно собрать рабочий фронтенд (HTML, CSS, Figma, JS basics).<br><br>
+        <strong>1. Frontend MVP:</strong> Верстка прототипов и интерфейсов (HTML, CSS, Figma, JS basics).<br><br>
         <strong>2. Data & Business:</strong> Работа с датасетами, Management & Coordination Exp, опыт кейс-чемпионатов.<br><br>
         <strong>3. Pitch Ready:</strong> Победитель 3MT и опытный спикер.
       </p>
     </div>
   </div>
 
-  <!-- JAVASCRIPT & WEB AUDIO ENGINE (PRO HI-TECH SFX & AMBIENT) -->
+  <!-- JAVASCRIPT: 3D ANIMATION & AUDIO SYNTHESIZER -->
   <script>
     /* ==========================================================================
-       PRO HI-TECH AUDIO ENGINE (WEB AUDIO API)
+       1. WEB AUDIO API: HIGH-TECH AMBIENT MUSIC & AUDIBLE SFX SYNTHESIZER
        ========================================================================== */
     let audioCtx = null;
-    let isMuted = true;
-    let bgOsc1 = null, bgOsc2 = null, bgGain = null, filterNode = null;
+    let isAudioActive = true;
+    let bgInterval = null;
 
-    function initAudioContext() {
+    function initAudio() {
       if (!audioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContext();
-        setupAmbientBg();
       }
-      if (audioCtx.state === 'suspended') {
+      if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
     }
 
-    function toggleAudio() {
-      initAudioContext();
-      isMuted = !isMuted;
-      const btn = document.getElementById('audio-toggle');
-      const icon = document.getElementById('audio-icon');
+    // High Tech Ambient Music Loop Generator (Synth Arpeggio + Sub Drone)
+    function startAmbientMusic() {
+      if (!audioCtx || bgInterval) return;
 
-      if (isMuted) {
-        btn.classList.remove('active');
-        btn.innerHTML = `<span id="audio-icon">🔇</span> SOUND: OFF`;
-        if (bgGain) bgGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
-      } else {
+      const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25, 659.25]; // A Minor Tech Scale
+      let noteIndex = 0;
+
+      // Play ambient pulses
+      bgInterval = setInterval(() => {
+        if (!isAudioActive || !audioCtx) return;
+
+        try {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          const filter = audioCtx.createBiquadFilter();
+
+          const freq = notes[noteIndex % notes.length];
+          noteIndex++;
+
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
+
+          gain.gain.setValueAtTime(0.025, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.35);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.35);
+        } catch(e){}
+      }, 240);
+    }
+
+    function toggleAudio() {
+      initAudio();
+      isAudioActive = !isAudioActive;
+      const btn = document.getElementById('audio-toggle');
+
+      if (isAudioActive) {
         btn.classList.add('active');
         btn.innerHTML = `<span id="audio-icon">⚡</span> SOUND: ON`;
-        if (bgGain) bgGain.gain.setTargetAtTime(0.018, audioCtx.currentTime, 0.2);
+        startAmbientMusic();
         playClickSFX();
+      } else {
+        btn.classList.remove('active');
+        btn.innerHTML = `<span id="audio-icon">🔇</span> SOUND: OFF`;
+        if (bgInterval) {
+          clearInterval(bgInterval);
+          bgInterval = null;
+        }
       }
     }
 
-    // Hi-Tech Subtle Cyber Hover SFX
+    // SFX: Sharp Cyber Hover
     function playHoverSFX() {
-      if (isMuted || !audioCtx) return;
+      if (!isAudioActive) return;
+      initAudio();
       try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(1400, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1800, audioCtx.currentTime + 0.03);
-        
-        gain.gain.setValueAtTime(0.012, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.03);
-        
+        osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(2200, audioCtx.currentTime + 0.04);
+
+        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.03);
+        osc.stop(audioCtx.currentTime + 0.04);
       } catch(e){}
     }
 
-    // Professional Clean Click / Button SFX
+    // SFX: Clean Click
     function playClickSFX() {
-      if (isMuted || !audioCtx) return;
+      if (!isAudioActive) return;
+      initAudio();
       try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(900, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(450, audioCtx.currentTime + 0.05);
-        
-        gain.gain.setValueAtTime(0.025, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.05);
-        
+        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.06);
+
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.06);
+
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.05);
+        osc.stop(audioCtx.currentTime + 0.06);
       } catch(e){}
     }
 
-    // Sleek Modal Open Sweep SFX
+    // SFX: Modal Futuristic Opening Sweep
     function playModalSFX() {
-      if (isMuted || !audioCtx) return;
+      if (!isAudioActive) return;
+      initAudio();
       try {
         const osc = audioCtx.createOscillator();
         const filter = audioCtx.createBiquadFilter();
         const gain = audioCtx.createGain();
-        
+
         osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-        
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(250, audioCtx.currentTime);
-        filter.frequency.exponentialRampToValueAtTime(1600, audioCtx.currentTime + 0.12);
-        
-        gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.15);
-        
+        filter.frequency.setValueAtTime(200, audioCtx.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(1800, audioCtx.currentTime + 0.15);
+
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.18);
+
         osc.connect(filter);
         filter.connect(gain);
         gain.connect(audioCtx.destination);
-        
+
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.15);
+        osc.stop(audioCtx.currentTime + 0.18);
       } catch(e){}
     }
 
-    // Professional Low Ambient Cyber Pad Generator
-    function setupAmbientBg() {
-      if (bgOsc1) return;
-      bgOsc1 = audioCtx.createOscillator();
-      bgOsc2 = audioCtx.createOscillator();
-      filterNode = audioCtx.createBiquadFilter();
-      bgGain = audioCtx.createGain();
+    // Initialize audio on first click anywhere
+    window.addEventListener('click', () => {
+      initAudio();
+      if (isAudioActive) startAmbientMusic();
+    }, { once: true });
 
-      bgOsc1.type = 'sine';
-      bgOsc1.frequency.setValueAtTime(55, audioCtx.currentTime); // Low A1 Sub
-
-      bgOsc2.type = 'triangle';
-      bgOsc2.frequency.setValueAtTime(110, audioCtx.currentTime); // A2 Sub
-
-      filterNode.type = 'lowpass';
-      filterNode.frequency.setValueAtTime(320, audioCtx.currentTime);
-
-      bgGain.gain.setValueAtTime(0, audioCtx.currentTime);
-
-      bgOsc1.connect(filterNode);
-      bgOsc2.connect(filterNode);
-      filterNode.connect(bgGain);
-      bgGain.connect(audioCtx.destination);
-
-      bgOsc1.start();
-      bgOsc2.start();
-    }
 
     /* ==========================================================================
-       MODAL CONTROLS & INTERACTION
+       2. 3D CANVAS EDGE ANIMATIONS (REAL-TIME ROTATING WIREFRAME OBJECTS)
+       ========================================================================== */
+    const canvas = document.getElementById('canvas-3d');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // 3D Polyhedron Math Projection
+    class Wireframe3D {
+      constructor(x, y, scale, color) {
+        this.x = x;
+        this.y = y;
+        this.baseY = y;
+        this.scale = scale;
+        this.color = color;
+        this.rx = Math.random() * Math.PI;
+        this.ry = Math.random() * Math.PI;
+        this.floatOffset = Math.random() * Math.PI * 2;
+
+        // Cube 3D Vertices
+        this.vertices = [
+          [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
+          [-1, -1,  1], [1, -1,  1], [1, 1,  1], [-1, 1,  1]
+        ];
+
+        // Cube Edges
+        this.edges = [
+          [0,1], [1,2], [2,3], [3,0],
+          [4,5], [5,6], [6,7], [7,4],
+          [0,4], [1,5], [2,6], [3,7]
+        ];
+      }
+
+      update() {
+        this.rx += 0.01;
+        this.ry += 0.012;
+        this.floatOffset += 0.02;
+        this.y = this.baseY + Math.sin(this.floatOffset) * 15;
+      }
+
+      draw() {
+        const projected = [];
+        const fov = 200;
+
+        for (let v of this.vertices) {
+          // Rotate X
+          let y1 = v[1] * Math.cos(this.rx) - v[2] * Math.sin(this.rx);
+          let z1 = v[1] * Math.sin(this.rx) + v[2] * Math.cos(this.rx);
+
+          // Rotate Y
+          let x2 = v[0] * Math.cos(this.ry) + z1 * Math.sin(this.ry);
+          let z2 = -v[0] * Math.sin(this.ry) + z1 * Math.cos(this.ry);
+
+          // Project
+          let distance = 3;
+          let scaleFactor = fov / (fov + z2 + distance);
+          let px = x2 * this.scale * scaleFactor + this.x;
+          let py = y1 * this.scale * scaleFactor + this.y;
+
+          projected.push([px, py]);
+        }
+
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 1.5;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 10;
+
+        for (let edge of this.edges) {
+          const p1 = projected[edge[0]];
+          const p2 = projected[edge[1]];
+          ctx.beginPath();
+          ctx.moveTo(p1[0], p1[1]);
+          ctx.lineTo(p2[0], p2[1]);
+          ctx.stroke();
+        }
+
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    // Create 3D Objects positioned on left and right screen edges
+    const objects3D = [
+      new Wireframe3D(70, 250, 35, '#00f0ff'),
+      new Wireframe3D(60, window.innerHeight - 250, 40, '#ccff00'),
+      new Wireframe3D(window.innerWidth - 70, 300, 42, '#ff0055'),
+      new Wireframe3D(window.innerWidth - 80, window.innerHeight - 200, 38, '#00f0ff')
+    ];
+
+    function animate3D() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Reposition dynamically if resized
+      objects3D[2].x = canvas.width - 70;
+      objects3D[3].x = canvas.width - 80;
+
+      for (let obj of objects3D) {
+        obj.update();
+        obj.draw();
+      }
+      requestAnimationFrame(animate3D);
+    }
+    animate3D();
+
+
+    /* ==========================================================================
+       3. MODAL CONTROLS
        ========================================================================== */
     function openModal(id) { 
       playModalSFX();
@@ -914,7 +1102,6 @@
       document.getElementById(id).classList.remove('active'); 
     }
 
-    // Close modal on background click
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
       overlay.addEventListener('click', (e) => {
         if (e.target === overlay) {
@@ -922,13 +1109,6 @@
         }
       });
     });
-
-    // Auto audio initialization on first user interaction anywhere
-    window.addEventListener('click', () => {
-      if (!audioCtx) {
-        initAudioContext();
-      }
-    }, { once: true });
   </script>
 </body>
 </html>
